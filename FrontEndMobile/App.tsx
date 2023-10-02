@@ -12,7 +12,7 @@ import { Login, Signup, List } from "./app/screens/Index";
 //import Layouts
 
 //import navigation
-import Main from "./app/navigation/MainStack";
+import MainStack from "./app/Navigation/MainStack";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,7 +36,7 @@ export default function App() {
         )} */}
         <Stack.Screen
           name="Main"
-          component={Main}
+          component={MainStack}
           options={{ headerShown: false }}
         />
         <Stack.Screen
