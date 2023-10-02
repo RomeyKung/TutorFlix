@@ -12,7 +12,7 @@ import { Login, Signup, List } from "./app/screens/Index";
 //import Layouts
 
 //import navigation
-import Main from "./app/navigation/Main";
+import Main from "./app/navigation/MainStack";
 
 const Stack = createNativeStackNavigator();
 
