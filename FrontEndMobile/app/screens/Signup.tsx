@@ -6,10 +6,12 @@ import {
   TextInput,
   SafeAreaView,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-const Signup = () => {
+const Signup = (prop:any) => {
+  const navigateToLogin = () => prop.navigation.navigate("Login");
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [isMatch, setIsMatch] = useState(true);
   const [data, setData] = useState({
@@ -30,61 +32,82 @@ const Signup = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={[styles.flex, { width: "100%" }]}>
-        <Text style={styles.h1}>SIGN UP TO APP</Text>
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Email"
-          inputMode="email"
-          onChange={(e) => setData({ ...data, email: e.nativeEvent.text })}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="First Name"
-          inputMode="text"
-          onChange={(e) => setData({ ...data, firstName: e.nativeEvent.text })}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Last Name"
-          inputMode="text"
-          onChange={(e) => setData({ ...data, lastName: e.nativeEvent.text })}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Phone"
-          inputMode="tel"
-          onChange={(e) => setData({ ...data, phone: e.nativeEvent.text })}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Password"
-          secureTextEntry={true}
-          onChange={(e) => setData({ ...data, password: e.nativeEvent.text })}
-        />
-        <TextInput
-          style={styles.TextInput}
-          placeholder="Confirm Password"
-          secureTextEntry={true}
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={[styles.flex, { width: "100%" }]}>
+          <Text style={styles.h1}>SIGN UP TO APP</Text>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            inputMode="email"
+            value={data.email}
+            onChange={(e) => setData({ ...data, email: e.nativeEvent.text })}
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="First Name"
+            inputMode="text"
+            value={data.firstName}
             onChange={(e) =>
-                setData({ ...data, confirmPassword: e.nativeEvent.text })
+              setData({ ...data, firstName: e.nativeEvent.text })
             }
-          onEndEditing={(e) => handleValidPassword(e.nativeEvent.text)}
-        />
-        {!isMatch && (
-          <Text style={{ color: "red" }}>Password does not match</Text>
-        )}
-      </View>
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Last Name"
+            inputMode="text"
+            value={data.lastName}
+            onChange={(e) => setData({ ...data, lastName: e.nativeEvent.text })}
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Phone"
+            inputMode="tel"
+            value={data.phone}
+            onChange={(e) => setData({ ...data, phone: e.nativeEvent.text })}
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            secureTextEntry={true}
+            value={data.password}
+            onChange={(e) => setData({ ...data, password: e.nativeEvent.text })}
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Confirm Password"
+            secureTextEntry={true}
+            onChange={(e) =>
+              setData({ ...data, confirmPassword: e.nativeEvent.text })
+            }
+            value={data.confirmPassword}
+            onEndEditing={(e) => handleValidPassword(e.nativeEvent.text)}
+          />
+          {!isMatch && (
+            <Text style={{ color: "red" }}>Password does not match</Text>
+          )}
+        </View>
 
-      <View style={{ flexDirection: "row", gap: 10 }}>
-        <TouchableOpacity style={styles.btn}>
-          <Text style={{ color: "white" }}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.btn, { backgroundColor: "black" }]}>
-          <Text style={{ color: "white" }}>Back</Text>
-        </TouchableOpacity>
-      </View>
-      {/* <TouchableOpacity></TouchableOpacity>    */}
+
+
+
+
+
+
+
+
+
+
+
+
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <TouchableOpacity style={styles.btn}>
+            <Text style={{ color: "white" }}>Sign Up</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.btn, { backgroundColor: "black" }]} onPress={navigateToLogin}>
+            <Text style={{ color: "white" }}>Back</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
@@ -101,6 +124,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 20,
+    width: "100%",
   },
   h1: {
     fontSize: 36,

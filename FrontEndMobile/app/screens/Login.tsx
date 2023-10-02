@@ -1,68 +1,143 @@
-import React, { useState } from 'react'
-import { View, Text, StyleSheet, TextInput, ActivityIndicator, Button, KeyboardAvoidingView } from 'react-native'
-import { FIREBASE_AUTH } from '../../FirebaseConfig';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-const Login = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
-    const auth = FIREBASE_AUTH;
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  ActivityIndicator,
+  Button,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  TouchableOpacity,
+  Image,
+} from "react-native";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+const Login = (prop: any) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = FIREBASE_AUTH;
+  const navigateToSignUp = () => prop.navigation.navigate("Signup");
 
-    const signIn = async () => {
-        setLoading(true);
-        try {
-            const response:any  = await signInWithEmailAndPassword(auth, email, password);
-            await console.log(response)
-            alert('Check your email for verification');
-        } catch (err: any) {
-            console.log(err);
-            alert('Sign in failed' + err.message);
-        } finally {
-            setLoading(false);
-        }
+  const signIn = async () => {
+    setLoading(true);
+    try {
+      const response: any = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      await console.log(response);
+      alert("Check your email for verification");
+    } catch (err: any) {
+      console.log(err);
+      alert("Sign in failed" + err.message);
+    } finally {
+      setLoading(false);
     }
-    const signUp = async () => {
-        setLoading(true);
-        try {
-            const response:any = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response)
-            alert('Check your email for verification');
-        } catch (err: any) {
-            console.log(err);
-            alert('Sign in failed' + err.message);
-        } finally {
-            setLoading(false);
-        }
+  };
+  const signUp = async () => {
+    setLoading(true);
+    try {
+      const response: any = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(response);
+      alert("Check your email for verification");
+    } catch (err: any) {
+      console.log(err);
+      alert("Sign in failed" + err.message);
+    } finally {
+      setLoading(false);
     }
+  };
 
+  return (
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <View style={[styles.flex, { width: "100%" }]}>
+          <Image
+            style={{ width: 200, height: 200, marginBottom: 20 }}
+            source={require("../../assets/icons/logo.png")}
+          />
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Email"
+            inputMode="email"
+            value={email}
+            onChange={(e) => setEmail(e.nativeEvent.text)}
+          />
 
-    return (
-        <View style={styles.container}>
-            <KeyboardAvoidingView behavior='padding'>
-                <TextInput value={email} style={styles.input} placeholder='Email' autoCapitalize='none' onChangeText={(text) => setEmail(text)}></TextInput>
-                <TextInput secureTextEntry={true} value={password} style={styles.input} placeholder='Password' autoCapitalize='none' onChangeText={(text) => setPassword(text)}></TextInput>
-
-                {loading ? <ActivityIndicator size="large" color={'#0000ff'} />
-                    : <>
-                        <Button title='Login' onPress={signIn}></Button>
-                        <Button title='Create account' onPress={signUp}></Button>
-                    </>}
-            </KeyboardAvoidingView>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Password"
+            secureTextEntry={true}
+            value={password}
+            onChange={(e) => setPassword(e.nativeEvent.text)}
+          />
         </View>
-    );
+
+        <View style={{rowGap :15}}>
+          <TouchableOpacity style={styles.btn} onPress={signIn}>
+            <Text style={{ color: "white" }}>Sign In</Text>
+          </TouchableOpacity>
+
+          <Text style={{ color: "red" }}>Don’t have an account?</Text>
+
+
+          <TouchableOpacity
+            style={[styles.btn, { backgroundColor: "black" }]}
+            onPress={navigateToSignUp}
+          >
+            <Text style={{ color: "white" }}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
-    container: {
-        marginHorizontal: 20,
-        flex: 1,
-        justifyContent: 'center',
-    },
-    input: {
-        marginVertical: 4,
-    }
-
-
+  flex: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+    width: "100%",
+  },
+  h1: {
+    fontSize: 36,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  TextInput: {
+    borderWidth: 1,
+    borderColor: "black",
+    width: "80%",
+    padding: 10,
+    margin: 10,
+    borderRadius: 4,
+  },
+  btn: {
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: 158,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
