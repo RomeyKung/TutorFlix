@@ -12,19 +12,16 @@ import {
   Image,
 } from "react-native";
 import { FIREBASE_AUTH } from "../../FirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+
 const Login = (prop: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+
   const auth = FIREBASE_AUTH;
   const navigateToSignUp = () => prop.navigation.navigate("Signup");
 
   const signIn = async () => {
-    setLoading(true);
     try {
       const response: any = await signInWithEmailAndPassword(
         auth,
@@ -36,25 +33,6 @@ const Login = (prop: any) => {
     } catch (err: any) {
       console.log(err);
       alert("Sign in failed" + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-  const signUp = async () => {
-    setLoading(true);
-    try {
-      const response: any = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log(response);
-      alert("Check your email for verification");
-    } catch (err: any) {
-      console.log(err);
-      alert("Sign in failed" + err.message);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -83,13 +61,12 @@ const Login = (prop: any) => {
           />
         </View>
 
-        <View style={{rowGap :15}}>
+        <View style={{ rowGap: 15 }}>
           <TouchableOpacity style={styles.btn} onPress={signIn}>
             <Text style={{ color: "white" }}>Sign In</Text>
           </TouchableOpacity>
 
           <Text style={{ color: "red" }}>Don’t have an account?</Text>
-
 
           <TouchableOpacity
             style={[styles.btn, { backgroundColor: "black" }]}

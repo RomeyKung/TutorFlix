@@ -8,7 +8,7 @@ interface RouterProps {
 }
 
 
-const List = ({navigation}:RouterProps) => {
+const Account = ({navigation}:RouterProps) => {
     return (
         <View>
             <Button onPress={()=> navigation.navigate('Details')} title="Open Details"/>
@@ -17,4 +17,4 @@ const List = ({navigation}:RouterProps) => {
     )
 }
 
-export default List
+export default Account

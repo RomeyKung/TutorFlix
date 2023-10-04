@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FIREBASE_AUTH } from "../../FirebaseConfig";
 
 const Signup = (prop:any) => {
   const navigateToLogin = () => prop.navigation.navigate("Login");
@@ -29,6 +30,27 @@ const Signup = (prop:any) => {
     }
     setIsMatch(true);
   };
+
+  const signUp = async () => {
+    const auth = FIREBASE_AUTH;
+    const { email, password } = data;
+
+    try {
+      const response: any = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      console.log(response);
+      alert("Check your email for verification");
+    } catch (err: any) {
+      console.log(err);
+      alert("Sign in failed" + err.message);
+    } 
+  };
+  
+
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -100,7 +122,7 @@ const Signup = (prop:any) => {
 
 
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={signUp}>
             <Text style={{ color: "white" }}>Sign Up</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.btn, { backgroundColor: "black" }]} onPress={navigateToLogin}>

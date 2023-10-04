@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-import { HomeScreen, List } from "../screens/Index";
+import { HomeScreen, Account } from "../screens/Index";
 
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -10,18 +10,22 @@ const MainStack = () => {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        // tabBar
         tabBarShowLabel: false,
         tabBarStyle: {
           position: "absolute",
-          bottom: 25,
-          left: 20,
-          right: 20,
+          bottom: 7,
+          left: 3,
+          right: 3,
           elevation: 0,
           backgroundColor: "#ffffff",
-          borderRadius: 15,
+          borderTopRightRadius: 20,
+          borderTopLeftRadius: 20,
           height: 90,
-          ...styles.shadow,
+          // ...styles.shadow,
+          borderTopWidth: 1, // Add a black border at the top
+          borderLeftWidth: 1,
+          borderRightWidth: 1,
+          borderTopColor: "#000000", // Set the border color to black
         },
       }}
     >
@@ -31,12 +35,92 @@ const MainStack = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <Image source={require("../../assets/icons/logo.png")} style={{width:60, height:60}}/>
+              <Image
+                source={
+                  focused
+                    ? require("../../assets/icons/Home.png")
+                    : require("../../assets/icons/HomeDisable.png")
+                }
+                resizeMode="contain"
+                style={{
+                  width: 120,
+                  marginLeft: 30,
+                }}
+              />
             </View>
           ),
+          headerShown: false,
         }}
       />
-      <Tab.Screen name="List" component={List} />
+      <Tab.Screen
+        name="Likes"
+        component={Account}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={
+                  focused
+                    ? require("../../assets/icons/Likes.png")
+                    : require("../../assets/icons/LikesDisable.png")
+                }
+                resizeMode="contain"
+                style={{
+                  width: 120,
+                  // marginLeft: 30,
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Search"
+        component={Account}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={
+                  focused
+                    ? require("../../assets/icons/Search.png")
+                    : require("../../assets/icons/SearchDisable.png")
+                }
+                resizeMode="contain"
+                style={{
+                  width: 120,
+                  // marginLeft: 30,
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
+        }}
+      />
+      <Tab.Screen
+        name="Profile"
+        component={Account}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <View>
+              <Image
+                source={
+                  focused
+                    ? require("../../assets/icons/Profile.png")
+                    : require("../../assets/icons/ProfileDisable.png")
+                }
+                resizeMode="contain"
+                style={{
+                  width: 120,
+                  marginRight: 30,
+                }}
+              />
+            </View>
+          ),
+          headerShown: false,
+        }}
+      />
     </Tab.Navigator>
   );
 };
@@ -48,10 +132,10 @@ const styles = StyleSheet.create({
     shadowColor: "#7f5df0",
     shadowOffset: {
       width: 0,
-      height: 10,
+      height: 9,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
-    elevation: 5,
+    shadowOpacity: 0.22,
+    shadowRadius: 9.22,
+    elevation: 12,
   },
 });
