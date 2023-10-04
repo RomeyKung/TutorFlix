@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-import { HomeScreen, Account } from "../screens/Index";
+import { HomeScreen, Account, Favorite } from "../screens/Index";
 
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -54,7 +54,7 @@ const MainStack = () => {
       />
       <Tab.Screen
         name="Likes"
-        component={Account}
+        component={Favorite}
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
@@ -72,7 +72,8 @@ const MainStack = () => {
               />
             </View>
           ),
-          headerShown: false,
+          headerTitle: "Favorites",
+          
         }}
       />
       <Tab.Screen
@@ -95,7 +96,7 @@ const MainStack = () => {
               />
             </View>
           ),
-          headerShown: false,
+          // headerShown: false,
         }}
       />
       <Tab.Screen
@@ -118,7 +119,7 @@ const MainStack = () => {
               />
             </View>
           ),
-          headerShown: false,
+          // headerShown: false,
         }}
       />
     </Tab.Navigator>

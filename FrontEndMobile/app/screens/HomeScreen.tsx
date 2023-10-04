@@ -1,12 +1,13 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Block from "../Components/Block";
+import TeacherCard from "../Components/TeacherCard";
 
 const HomeScreen = () => {
   return (
     <>
       <View style={styles.banner}>
-        <View style={{ flexDirection:"row", columnGap:18 }}>
+        <View style={{ flexDirection: "row", columnGap: 18 }}>
           <Image
             resizeMode="contain"
             style={{ height: 59, width: 60 }}
@@ -17,7 +18,7 @@ const HomeScreen = () => {
           </Text>
         </View>
       </View>
-
+      {/* <TeacherCard /> */}
       {/* //content */}
       <View style={[styles.container]}>
         <Block bgColor={"#FF7C55"} title={"ความบันเทิง"} />
