@@ -1,11 +1,9 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import ModalReview from '../Components/ModalReview'
+import PostScreen from './PostScreen'
 const Test = () => {
     return (
-        <View>
-            <ModalReview/>
-        </View>
+           <PostScreen/>    
     )
 }
 
