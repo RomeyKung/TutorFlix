@@ -1,9 +1,15 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ScrollView,
+  FlatList,
+} from "react-native";
 import Block from "../Components/Block";
-import TeacherCard from "../Components/TeacherCard";
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   return (
     <>
       <View style={styles.banner}>
@@ -21,11 +27,19 @@ const HomeScreen = () => {
       {/* <TeacherCard /> */}
       {/* //content */}
       <View style={[styles.container]}>
-        <Block bgColor={"#FF7C55"} title={"ความบันเทิง"} />
-        <Block bgColor={"#FFA800"} title={"วิชาการ"} />
-        <Block bgColor={"#4CA771"} title={"ทั่วไป"} />
+        <FlatList
+          data={[
+            { color: "#FF7C55", title: "ความบันเทิง", },
+            { color: "#FFA800", title: "วิชาการ", },
+            { color: "#4CA771", title: "ทั่วไป", },
+            // Add more items here if needed
+          ]}
+          renderItem={({ item }) => (
+            <Block bgColor={item.color} title={item.title} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
-      {/* <View style={styles.container}></View> */}
     </>
   );
 };

@@ -5,7 +5,7 @@ import { useFonts } from "expo-font";
 const Block = (props) => {
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-    PakkadThin: require("../../assets/fonts/PakkadThin.ttf"),
+    "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
   });
 
   if (!loaded) {
