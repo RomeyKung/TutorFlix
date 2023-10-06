@@ -7,20 +7,26 @@ import {
   Button,
   StyleSheet,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import ButtonCustom from "./ButtonCustom";
 import { useFonts } from "expo-font";
+const ImgIcon = {
+  fb: require("../../assets/img/fbicon.png"),
+  line: require("../../assets/img/lineicon.png"),
+  ig: require("../../assets/img/igicon1.png"),
+};
 
-const ModalReview = () => {
+const EditHistory = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [value1, setValue1] = useState("");
   const [value2, setValue2] = useState("");
   const [value3, setValue3] = useState("");
-  const [additionalComments, setAdditionalComments] = useState("");
+  const [HistoryDetail, setHistoryDetail] = useState("");
 
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-    "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
+    PakkadThin: require("../../assets/fonts/PakkadThin.ttf"),
   });
 
   if (!loaded) {
@@ -35,13 +41,13 @@ const ModalReview = () => {
     setIsVisible(false);
   };
 
-  const submitReview = () => {
+  const SubmitHistory = () => {
     // ทำการนำข้อมูลที่ผู้ใช้กรอกไปใช้งานต่อ
     console.log("Review submitted:", {
       value1,
       value2,
       value3,
-      additionalComments,
+      HistoryDetail,
     });
     // ปิด Modal
     hideModal();
@@ -49,7 +55,7 @@ const ModalReview = () => {
 
   return (
     <View>
-      <ButtonCustom title="เขียนรีวิว" function={showModal} />
+      <ButtonCustom title="ใส่ข้อมูลประวัติ" function={showModal} />
       <Modal
         transparent={true}
         visible={isVisible}
@@ -60,87 +66,68 @@ const ModalReview = () => {
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>รีวิว</Text>
+                <Text style={styles.modalTitle}>ประวัติ</Text>
 
-                {/* 1. ความคุ้มค่า */}
-                <View style={styles.reviewItem}>
-                  <Text style={styles.text}>ความคุ้มค่า</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      columnGap: 5,
-                    }}
-                  >
-                    <TextInput
-                      style={styles.input}
-                      keyboardType="numeric"
-                      value={value1}
-                      onChangeText={(text) => setValue1(text)}
-                    />
-                    <Text style={styles.text}>/10</Text>
-                  </View>
-                </View>
-
-                {/* 2. เนื้อหาที่สอน */}
-                <View style={styles.reviewItem}>
-                  <Text style={styles.text}>เนื้อหาที่สอน</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      columnGap: 5,
-                    }}
-                  >
-                    <TextInput
-                      style={styles.input}
-                      keyboardType="numeric"
-                      value={value2}
-                      onChangeText={(text) => setValue2(text)}
-                    />
-                    <Text style={styles.text}>/10</Text>
-                  </View>
-                </View>
-
-                {/*3. เทคนิคในการ */}
-                <View style={styles.reviewItem}>
-                  <Text style={styles.text}>เทคนิคในการ</Text>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      columnGap: 5,
-                    }}
-                  >
-                    <TextInput
-                      style={styles.input}
-                      keyboardType="numeric"
-                      value={value3}
-                      onChangeText={(text) => setValue3(text)}
-                    />
-                    <Text style={styles.text}>/10</Text>
-                  </View>
-                </View>
-
-                {/* ช่องคำบรรยายเพิ่มเติม */}
                 <View style={styles.reviewItemArea}>
-                  <Text style={styles.text}>คำบรรยายเพิ่มเติม</Text>
+                  <Text style={styles.text}>ประวัติการศึกษา</Text>
                   <TextInput
                     style={styles.inputArea}
                     multiline
                     numberOfLines={4}
-                    placeholder="บรรยายเพิ่มเติม..."
-                    value={additionalComments}
-                    onChangeText={(text) => setAdditionalComments(text)}
+                    placeholder="รายละเอียด"
+                    value={HistoryDetail}
+                    onChangeText={(text) => setHistoryDetail(text)}
                   />
+                </View>
+                <View style = {styles.contactInfo}>
+                <Image
+                  style={styles.img}
+                  source={ImgIcon.fb}
+                  resizeMode="contain"
+                />
+                <TextInput
+                      style={styles.input}
+                      value={value1}
+                      placeholder="link Facebook"
+                      onChangeText={(text) => setValue1(text)}
+                    />
+                    
+                </View>
+                <View style = {styles.contactInfo}>
+                <Image
+                  style={styles.img}
+                  source={ImgIcon.ig}
+                  resizeMode="contain"
+                />
+                <TextInput
+                      style={styles.input}
+                      value={value2}
+                      placeholder="link Instagram"
+                      onChangeText={(text) => setValue2(text)}
+                    />
+                    
+                </View>
+                <View style = {styles.contactInfo}>
+                <Image
+                  style={styles.img}
+                  source={ImgIcon.line}
+                  resizeMode="contain"
+                />
+                <TextInput
+                      style={styles.input}
+                      value={value3}
+                      placeholder="link LINE"
+                      onChangeText={(text) => setValue3(text)}
+                    />
+                    
                 </View>
 
                 {/* ปุ่ม Submit */}
-                {/* <Button title="Submit" onPress={submitReview} /> */}
+                {/* <Button title="Submit" onPress={SubmitHistory} /> */}
                 <View
-                  style={{ flexDirection: "row", alignContent: "space-around" }}
+                  style={{ flexDirection: "row", alignContent: "space-around" , marginTop : 10, gap : 20,}}
                 >
-                  <ButtonCustom title="โพสต์รีวิว" function={submitReview} />
+                  <ButtonCustom title="บันทึก" function={SubmitHistory} />
                   <ButtonCustom title="กลับ" function={hideModal} />
                 </View>
               </View>
@@ -153,14 +140,27 @@ const ModalReview = () => {
 };
 
 const styles = StyleSheet.create({
+  contactInfo : {
+    flexDirection :  "row",
+    gap : 20,
+    alignItems : 'center',
+    marginBottom : 10,
+  },
+  img: {
+    width: 40,
+    height: 40,
+    
+  },
   modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "rgba(0, 0, 0, 0.5)",
+
   },
   modalContent: {
-   
+    height : '80%',
+  width : '100%',
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
@@ -183,10 +183,11 @@ const styles = StyleSheet.create({
     // columnGap: 10,
   },
   input: {
-    width: 55,
+    width: '70%',
+    height : 40,
     borderWidth: 1,
     borderColor: "#ccc",
-    borderRadius: 5,
+    borderRadius: 2,
     padding: 8,
     backgroundColor: "#F9F9F9",
   },
@@ -203,4 +204,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ModalReview;
+export default EditHistory;
