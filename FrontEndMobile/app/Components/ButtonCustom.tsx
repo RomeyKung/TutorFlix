@@ -22,7 +22,7 @@ export default ButtonCustom;
 const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 20,
-    width: 130,
+    width: 140,
     height: 38,
     borderColor: "#000",
     borderWidth: 2,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   title: {
-    fontSize: 15,
+    fontSize: 13,
     fontWeight: "bold",
     color: "#000",
     textAlign: "center",

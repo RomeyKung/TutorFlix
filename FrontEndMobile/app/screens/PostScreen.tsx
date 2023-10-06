@@ -3,7 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import ButtonCustom from "../Components/ButtonCustom";
 
-const PostScreen = () => {
+const PostScreen = ({navigation})=> {
   const [category, setCategory] = useState("วิชาการ");
   const [topic, setTopic] = useState("");
   const [content, setContent] = useState("");
@@ -81,7 +81,7 @@ const PostScreen = () => {
 
       <View style={styles.buttonContainer}>
         <ButtonCustom title="โพสต์บล็อก" function={handlePostBlog} />
-        <ButtonCustom title="กลับ" />
+        <ButtonCustom title="กลับ"  function={() => navigation.goBack()}/>
       </View>
     </View>
   );
