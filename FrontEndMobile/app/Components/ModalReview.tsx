@@ -18,6 +18,15 @@ const ModalReview = () => {
   const [value3, setValue3] = useState("");
   const [additionalComments, setAdditionalComments] = useState("");
 
+  const [loaded] = useFonts({
+    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
+    "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
+  });
+
+  if (!loaded) {
+    return <Text style={styles.text}>Loading fonts...</Text>;
+  }
+
   const showModal = () => {
     setIsVisible(true);
   };
@@ -37,15 +46,6 @@ const ModalReview = () => {
     // ปิด Modal
     hideModal();
   };
-
-  const [loaded] = useFonts({
-    "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-    PakkadThin: require("../../assets/fonts/PakkadThin.ttf"),
-  });
-
-  if (!loaded) {
-    return <Text style={styles.text}>Loading fonts...</Text>;
-  }
 
   return (
     <View>
@@ -198,8 +198,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#F9F9F9",
   },
   text: {
-    fontFamily: "Montserrat-Regular",
     fontWeight: "600",
+    fontFamily: "Montserrat-Regular",
   },
 });
 

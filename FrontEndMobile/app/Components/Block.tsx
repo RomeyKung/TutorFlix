@@ -1,8 +1,13 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Touchable, TouchableOpacity } from "react-native";
 import { useFonts } from "expo-font";
+interface BlockProps {
+  bgColor: string;
+  title: string;
+  function?: () => void;
+}
 
-const Block = (props) => {
+const Block = (props:BlockProps) => {
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
     "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
@@ -13,9 +18,9 @@ const Block = (props) => {
   }
 
   return (
-    <View style={[styles.block, { backgroundColor: props.bgColor }]}>
+    <TouchableOpacity style={[styles.block, { backgroundColor: props.bgColor }]} onPress={props.function}>
       <Text style={styles.title}>{props.title}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
