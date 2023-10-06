@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image, Button, Pressable } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
+import ButtonCustom from "../Components/ButtonCustom";
 
 
 const TutorDetail = () => {
@@ -49,12 +50,7 @@ const TutorDetail = () => {
                     <Image style={styles.iconImg} source={imgIcon.line}></Image>
                     <Image style={styles.iconImg} source={imgIcon.instagram}></Image>
                 </View>
-                <Pressable style={styles.button}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={{ marginLeft: 20, fontWeight: "bold" }}>ดูประวัติ</Text>
-                        <AntDesign name="down" size={16} color="black" />
-                    </View>
-                </Pressable>
+                <ButtonCustom title="ดูประวัติ"></ButtonCustom>
             </View>
             <View style={[styles.textSpace, {paddingTop: 20, width: "75%", flexWrap: "wrap"}]}>
                 <View>
@@ -66,16 +62,11 @@ const TutorDetail = () => {
                         Tellus risus id id </Text>
                 </View>
             </View>
-            <View style={[styles.textSpace, {paddingTop: 20, flexDirection: "row", justifyContent: "space-between"}]}>
+            <View style={[styles.textSpace, {marginRight : 20, paddingTop: 20, flexDirection: "row", justifyContent: "space-between"}]}>
                 <View>
                     <Text style={{ fontSize : 25, fontWeight: "bold", paddingBottom: 10 }}>รีวิวผู้สอน</Text>
                 </View>
-                <Pressable style={styles.button}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                        <Text style={{ marginLeft: 20, fontWeight: "bold" }}>เขียนรีวิว</Text>
-                        <AntDesign name="down" size={16} color="black" />
-                    </View>
-                </Pressable>
+                <ButtonCustom title="เขียนรีวิว"></ButtonCustom>
             </View>
             <View style={{flexDirection: "column"}}>
                 <View style={[styles.textSpace , {paddingTop: 20}]}>
@@ -173,7 +164,8 @@ const styles = StyleSheet.create({
     infoSection: {
         flexDirection: "row",
         justifyContent: "space-between",
-        paddingTop: 20
+        paddingTop: 20,
+        marginRight: 20
     },
     reviewBorder: {
         width: "80%", 
