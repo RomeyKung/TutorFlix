@@ -17,10 +17,9 @@ const MainStack = () => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: {
-          position: "absolute",
-          bottom: 7,
-          left: 3,
-          right: 3,
+          // position: "absolute",
+          // left: 3,
+          // right: 3,
           elevation: 0,
           backgroundColor: "#ffffff",
           borderTopRightRadius: 20,
