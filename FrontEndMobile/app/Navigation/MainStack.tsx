@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-import { HomeScreen, Account, Favorite } from "../screens/Index";
+import { HomeScreen, Account, Favorite, Search } from "../screens/Index";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Octicons } from '@expo/vector-icons';
@@ -50,11 +50,11 @@ const MainStack = () => {
                   borderRadius: 19.03,
                   justifyContent: "center",
                   alignItems: "center",
-                  
-             
+
+
                 }}
               >
-                <View style={{  flexDirection: "row", columnGap: 5, }}>
+                <View style={{ flexDirection: "row", columnGap: 5, }}>
                   <Feather name="home" size={24} color="#5B37B7" />
                   <Text
                     style={{
@@ -68,7 +68,7 @@ const MainStack = () => {
                 </View>
               </View>
             ) : (
-              <View style={{  flexDirection: "row", columnGap: 5 }}>
+              <View style={{ flexDirection: "row", columnGap: 5 }}>
                 <Feather name="home" size={24} color="#44475C" />
               </View>
             ),
@@ -93,7 +93,7 @@ const MainStack = () => {
                   alignItems: "center",
                 }}
               >
-                <View style={{  flexDirection: "row", columnGap: 5 }}>
+                <View style={{ flexDirection: "row", columnGap: 5 }}>
                   <AntDesign name="hearto" size={24} color="#C9379D" />
                   <Text
                     style={{
@@ -107,7 +107,7 @@ const MainStack = () => {
                 </View>
               </View>
             ) : (
-              <View style={{  flexDirection: "row", columnGap: 5 }}>
+              <View style={{ flexDirection: "row", columnGap: 5 }}>
                 <AntDesign name="hearto" size={24} color="#44475C" />
               </View>
             ),
@@ -116,7 +116,7 @@ const MainStack = () => {
       />
       <Tab.Screen
         name="Search"
-        component={Account}
+        component={Search}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -132,7 +132,7 @@ const MainStack = () => {
                   alignItems: "center",
                 }}
               >
-                <View style={{  flexDirection: "row", columnGap: 5 }}>
+                <View style={{ flexDirection: "row", columnGap: 5 }}>
                   <AntDesign name="search1" size={24} color="#E6A919" />
                   <Text
                     style={{
@@ -146,10 +146,11 @@ const MainStack = () => {
                 </View>
               </View>
             ) : (
-              <View style={{  flexDirection: "row", columnGap: 5 }}>
+              <View style={{ flexDirection: "row", columnGap: 5 }}>
                 <AntDesign name="search1" size={24} color="#44475C" />
               </View>
             ),
+            title: "ค้นหาจากทั้งหมด"
           // headerShown: false,
         }}
       />
@@ -171,7 +172,7 @@ const MainStack = () => {
                   alignItems: "center",
                 }}
               >
-                <View style={{  flexDirection: "row", columnGap: 5 }}>
+                <View style={{ flexDirection: "row", columnGap: 5 }}>
                   <MaterialCommunityIcons name="account-circle-outline" size={24} color="#1194AA" />
                   <Text
                     style={{
@@ -185,7 +186,7 @@ const MainStack = () => {
                 </View>
               </View>
             ) : (
-              <View style={{  flexDirection: "row", columnGap: 5 }}>
+              <View style={{ flexDirection: "row", columnGap: 5 }}>
                 <MaterialCommunityIcons name="account-circle-outline" size={24} color="#44475C" />
               </View>
             ),
