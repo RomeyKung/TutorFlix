@@ -4,4 +4,4 @@ export {default as Signup} from './Signup';
 export {default as HomeScreen} from './HomeScreen';
 export {default as Favorite} from './Favorite';
 export {default as PostScreen} from './PostScreen';
-export {default as Search} from "./Search"
+export {default as Search} from "../Navigation/SearchStack"

@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text } from 'react-native'
 import PostScreen from './PostScreen'
-import Search from './Search'
+import Search from '../Navigation/SearchStack'
 import ModalReview from '../Components/ModalReview'
 import TutorDetail from './TutorDetail'
 
