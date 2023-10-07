@@ -1,9 +1,15 @@
 import React, { useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+interface TochProps {
+  children: React.ReactNode;
+  function: () => void;
+  likeAlready: any;
+}
 
-function TeacherCard(props: any) {
+
+function TeacherCard(props: TochProps) {
   const teacherInfo = {
     img: require("../../assets/img/Anya.jpg"),
     name: "Anya",
@@ -20,7 +26,7 @@ function TeacherCard(props: any) {
 
 
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={props.function}>
       <View style={styles.imgSide}>
         <Image
           style={styles.img}
@@ -62,7 +68,7 @@ function TeacherCard(props: any) {
           </Pressable>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

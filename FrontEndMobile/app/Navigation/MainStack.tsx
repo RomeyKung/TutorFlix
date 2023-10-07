@@ -3,11 +3,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet, Image } from "react-native";
 
 import { HomeScreen, Account, Favorite, Search } from "../screens/Index";
-
 import { AntDesign } from "@expo/vector-icons";
-import { Octicons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import AccountStack from "./AccountStack";
+
+
 
 const Tab = createBottomTabNavigator();
 const MainStack = () => {
@@ -155,7 +156,7 @@ const MainStack = () => {
       />
       <Tab.Screen
         name="Profile"
-        component={Account}
+        component={AccountStack}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (

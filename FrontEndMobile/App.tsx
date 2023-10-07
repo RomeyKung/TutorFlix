@@ -48,7 +48,7 @@ export default function App() {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Test" component={Test} />
-        <Stack.Screen name="PostScreen" component={PostScreen} options={{headerShown : false}}/>
+
       </Stack.Navigator>
     </NavigationContainer>
   );
