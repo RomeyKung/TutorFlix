@@ -37,7 +37,7 @@ function TeacherCard(props: any) {
         <Text style={[styles.text, { color: "#0487FF" }]}>
           THB {teacherInfo.cost}/hr
         </Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
           <View style={styles.rating}>
             <Image
               style={{ height: 25 }}
@@ -54,6 +54,7 @@ function TeacherCard(props: any) {
           {/* Favorite Button */}
           <Pressable onPress={toggleFavorite}>
             <MaterialCommunityIcons
+              style={{marginTop : 10}}
               name={userFav ? "heart" : "heart-outline"}
               size={30}
               color={userFav ? "#FF0000" : "#000"}
@@ -69,7 +70,7 @@ export default TeacherCard;
 
 const styles = StyleSheet.create({
   card: {
-    width: 270,
+    width: "80%",
     height: 150,
     backgroundColor: "#fff",
     borderRadius: 10,
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#000",
     flexDirection: "row",
-    paddingHorizontal: 10, // Add some horizontal padding
+    marginVertical: 10,
+    paddingHorizontal: 20, // Add some horizontal padding
   },
   imgSide: {
     width: "30%", // Set the image width to 30% of the card width
@@ -88,6 +90,8 @@ const styles = StyleSheet.create({
   info: {
     flex: 1, // Take the remaining space in the card
     paddingHorizontal: 10, // Add some horizontal padding
+    marginHorizontal: 20
+    
   },
   text: {
     fontWeight: "800",
@@ -96,6 +100,7 @@ const styles = StyleSheet.create({
   rating: {
     width: 70,
     height: 30,
+    marginTop: 10,
     backgroundColor: "#000",
     borderRadius: 50,
     borderWidth: 1,
