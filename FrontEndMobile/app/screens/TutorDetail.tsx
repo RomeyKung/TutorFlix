@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image, Button, Pressable } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
 import ButtonCustom from "../Components/ButtonCustom";
+import ReviewCard from "../Components/ReviewCard";
 
 
 const TutorDetail = () => {
@@ -68,42 +69,8 @@ const TutorDetail = () => {
                 </View>
                 <ButtonCustom title="เขียนรีวิว"></ButtonCustom>
             </View>
-            <View style={{flexDirection: "column"}}>
-                <View style={[styles.textSpace , {paddingTop: 20}]}>
-                    <Image style={styles.reviewImg} source={tutorInfo.img}></Image>
-                </View>
-                <View style={styles.textSpace}>
-                    <Text style={{paddingLeft: 20, paddingBottom: 10}}>{tutorInfo.name}</Text>
-                </View>
-            </View>
-            <View style={[styles.textSpace, {flexDirection: "column", gap: 10}]}>
-                <Text>ความคุ้มค่า 5/10</Text>
-                <Text>เนื้อหาที่สอน 7/10</Text>
-                <Text>เทคนิคในการสอน 5/10</Text>
-            </View>
-            <View style={{width: "80%", paddingTop: 10, paddingBottom: 10, flexDirection: "row", flexWrap: "wrap"}}>
-            <Text style={styles.textSpace}>อาจารย์แบบว่า Lorem ipsum dolor sit amet consectetur.</Text>
-            </View>
-            <View style={styles.reviewBorder}>
-            </View>
-            <View style={{flexDirection: "column"}}>
-                <View style={[styles.textSpace , {paddingTop: 20}]}>
-                    <Image style={styles.reviewImg} source={tutorInfo.img}></Image>
-                </View>
-                <View style={styles.textSpace}>
-                    <Text style={{paddingLeft: 20, paddingBottom: 10}}>{tutorInfo.name}</Text>
-                </View>
-            </View>
-            <View style={[styles.textSpace, {flexDirection: "column", gap: 10}]}>
-                <Text>ความคุ้มค่า 5/10</Text>
-                <Text>เนื้อหาที่สอน 7/10</Text>
-                <Text>เทคนิคในการสอน 5/10</Text>
-            </View>
-            <View style={{width: "80%", paddingTop: 10, paddingBottom: 10, flexDirection: "row", flexWrap: "wrap"}}>
-            <Text style={styles.textSpace}>อาจารย์แบบว่า Lorem ipsum dolor sit amet consectetur.</Text>
-            </View>
-            <View style={[styles.reviewBorder, {marginBottom: 30}]}>
-            </View>
+            <ReviewCard></ReviewCard>
+            <ReviewCard></ReviewCard>
         </ScrollView>
     )
 }

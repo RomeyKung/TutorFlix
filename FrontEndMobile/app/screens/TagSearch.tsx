@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Pressable, Alert } from "react-native";
 import SearchBar from "../Components/SearchBar";
+import Tag from "../Components/Tag";
 
 
 const TagSearch = () => {
@@ -10,30 +11,7 @@ const TagSearch = () => {
                 <SearchBar></SearchBar>
             </View>
             <View style={styles.textbox}>
-                <Pressable onPress={() => {Alert.alert("กดปุ่มแล้ว ไอโง่!!")}}>
-                    <Text style={styles.tagtext}>#Dota2</Text>
-                </Pressable>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#English</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Cook</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Chemistry</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Mathematics</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Thai</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Japan</Text>
-                </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styles.tagtext}>#Programming</Text>
-                </TouchableOpacity>
+                <Tag title="Dota2"></Tag>
             </View>
         </ScrollView>
     )
