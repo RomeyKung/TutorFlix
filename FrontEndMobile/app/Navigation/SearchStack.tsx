@@ -8,7 +8,7 @@ const Top = createMaterialTopTabNavigator();
 
 const Search = (props : any) => {
     return (   
-    <Top.Navigator screenOptions={{tabBarStyle: {justifyContent: "center"}}}>
+    <Top.Navigator screenOptions={{tabBarIndicatorStyle: { backgroundColor: 'black', height: 2 }}}>
         <Top.Screen options={{title: "ค้นหาจาก TAG"}} name="Tag" component={TagSearch}/>
         <Top.Screen options={{title : "ค้นหาจากผู้สอน"}} name="Tutor" component={TutorSearch}/>
     </Top.Navigator>
