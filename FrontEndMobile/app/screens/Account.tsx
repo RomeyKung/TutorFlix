@@ -70,7 +70,9 @@ const EditInfo = () => {
 
         
       </View>
+     
       <ButtonCustom title="โพสต์" function={ ()=> navigation.navigate("PostScreen")}/>
+      <ButtonCustom title="แก้ไขโพสต์" function={ ()=> navigation.navigate("EditPost")}/>
     </View>
   );
 };
