@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import React from "react";
-import TeacherCard from "../Components/TeacherCard";
+import TeacherCard from "../../Components/TeacherCard";
 const Favorite = (props: any) => {
 
   return (

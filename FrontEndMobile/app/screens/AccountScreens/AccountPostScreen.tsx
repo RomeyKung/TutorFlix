@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import ButtonCustom from "../Components/ButtonCustom";
+import ButtonCustom from "../../Components/ButtonCustom";
 
 const PostScreen = ({navigation})=> {
   const [category, setCategory] = useState("วิชาการ");

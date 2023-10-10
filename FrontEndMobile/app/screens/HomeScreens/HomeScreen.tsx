@@ -7,7 +7,7 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-import Block from "../Components/Block";
+import Block from "../../Components/Block";
 
 const HomeScreen = ({navigation}) => {
   return (
@@ -17,7 +17,7 @@ const HomeScreen = ({navigation}) => {
           <Image
             resizeMode="contain"
             style={{ height: 59, width: 60 }}
-            source={require("../../assets/icons/logo.png")}
+            source={require("../../../assets/icons/logo.png")}
           />
           <Text style={{ color: "#fff", fontSize: 30, fontWeight: "bold" }}>
             TutorFlix
@@ -29,13 +29,13 @@ const HomeScreen = ({navigation}) => {
       <View style={[styles.container]}>
         <FlatList
           data={[
-            { color: "#FF7C55", title: "ความบันเทิง", },
+            { color: "#FF7C55", title: "ความบันเทิง",  },
             { color: "#FFA800", title: "วิชาการ", },
             { color: "#4CA771", title: "ทั่วไป", },
             // Add more items here if needed
           ]}
           renderItem={({ item }) => (
-            <Block bgColor={item.color} title={item.title} />
+            <Block bgColor={item.color} title={item.title} function={()=>navigation.navigate("HomeTag", {type: item.title})}/>
           )}
           keyExtractor={(item, index) => index.toString()}
         />

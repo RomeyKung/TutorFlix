@@ -1,14 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, Image, Button, Pressable } from "react-native";
 import { AntDesign } from '@expo/vector-icons';
-import ButtonCustom from "../Components/ButtonCustom";
-import ReviewCard from "../Components/ReviewCard";
+import ButtonCustom from "../../Components/ButtonCustom";
+import ReviewCard from "../../Components/ReviewCard";
 
 
 const TutorDetail = () => {
 
     const tutorInfo = {
-        img: require("../../assets/img/Anya.jpg"),
+        img: require("../../../assets/img/Anya.jpg"),
         name: "Anya",
         subject: "Math",
         cost: 200,
@@ -16,9 +16,9 @@ const TutorDetail = () => {
     }
 
     const imgIcon = {
-        fb: require("../../assets/icons/facebook_icon.png"),
-        line: require("../../assets/icons/line_icon.png"),
-        instagram: require("../../assets/icons/instagram_icon.png")
+        fb: require("../../../assets/icons/facebook_icon.png"),
+        line: require("../../../assets/icons/line_icon.png"),
+        instagram: require("../../../assets/icons/instagram_icon.png")
     }
 
     return (
@@ -35,7 +35,7 @@ const TutorDetail = () => {
                 <View style={styles.rating}>
                     <Image
                         style={{ height: 25 }}
-                        source={require("../../assets/icons/star.png")}
+                        source={require("../../../assets/icons/star.png")}
                         resizeMode="contain"
                     />
                     <Text

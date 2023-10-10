@@ -3,9 +3,9 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 interface TochProps {
-  children: React.ReactNode;
-  function: () => void;
-  likeAlready: any;
+  // children?: React.ReactNode;
+  function?: () => void;
+  likeAlready?: any;
 }
 
 

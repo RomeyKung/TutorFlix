@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Pressable, Alert } from "react-native";
-import SearchBar from "../Components/SearchBar";
-import Tag from "../Components/Tag";
+import SearchBar from "../../Components/SearchBar";
+import Tag from "../../Components/Tag";
 
 
 const TagSearch = () => {

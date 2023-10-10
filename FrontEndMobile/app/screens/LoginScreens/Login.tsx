@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 const Login = (prop: any) => {
@@ -38,44 +38,44 @@ const Login = (prop: any) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View style={[styles.flex, { width: "100%" }]}>
-          <Image
-            style={{ width: 200, height: 200, marginBottom: 20 }}
-            source={require("../../assets/icons/logo.png")}
-          />
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Email"
-            inputMode="email"
-            value={email}
-            onChange={(e) => setEmail(e.nativeEvent.text)}
-          />
+      {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
+      <View style={[styles.flex, { width: "100%" }]}>
+        <Image
+          style={{ width: 200, height: 200, marginBottom: 20 }}
+          source={require("../../../assets/icons/logo.png")}
+        />
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email"
+          inputMode="email"
+          value={email}
+          onChange={(e) => setEmail(e.nativeEvent.text)}
+        />
 
-          <TextInput
-            style={styles.TextInput}
-            placeholder="Password"
-            secureTextEntry={true}
-            value={password}
-            onChange={(e) => setPassword(e.nativeEvent.text)}
-          />
-        </View>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Password"
+          secureTextEntry={true}
+          value={password}
+          onChange={(e) => setPassword(e.nativeEvent.text)}
+        />
+      </View>
 
-        <View style={{ rowGap: 15 }}>
-          <TouchableOpacity style={styles.btn} onPress={signIn}>
-            <Text style={{ color: "white" }}>Sign In</Text>
-          </TouchableOpacity>
+      <View style={{ rowGap: 15 }}>
+        <TouchableOpacity style={styles.btn} onPress={signIn}>
+          <Text style={{ color: "white" }}>Sign In</Text>
+        </TouchableOpacity>
 
-          <Text style={{ color: "red" }}>Don’t have an account?</Text>
+        <Text style={{ color: "red" }}>Don’t have an account?</Text>
 
-          <TouchableOpacity
-            style={[styles.btn, { backgroundColor: "black" }]}
-            onPress={navigateToSignUp}
-          >
-            <Text style={{ color: "white" }}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
+        <TouchableOpacity
+          style={[styles.btn, { backgroundColor: "black" }]}
+          onPress={navigateToSignUp}
+        >
+          <Text style={{ color: "white" }}>Sign Up</Text>
+        </TouchableOpacity>
+      </View>
+      {/* </KeyboardAvoidingView> */}
     </SafeAreaView>
   );
 };

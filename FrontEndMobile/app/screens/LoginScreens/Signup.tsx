@@ -9,7 +9,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../FirebaseConfig";
+import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 
 const Signup = (prop:any) => {
   const navigateToLogin = () => prop.navigation.navigate("Login");

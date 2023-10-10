@@ -2,11 +2,13 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-import { HomeScreen, Account, Favorite, Search } from "../screens/Index";
+import { HomeScreen, Account, Favorite } from "../screens/Index";
 import { AntDesign } from "@expo/vector-icons";
 import { Feather } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import AccountStack from "./AccountStack";
+import HomeStack from "./HomeStack";
+import SearchStack from "./SearchStack";
 
 
 
@@ -35,8 +37,8 @@ const MainStack = () => {
       }}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="HomeStack"
+        component={HomeStack}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
@@ -116,7 +118,7 @@ const MainStack = () => {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={SearchStack}
         options={{
           tabBarIcon: ({ focused }) =>
             focused ? (
