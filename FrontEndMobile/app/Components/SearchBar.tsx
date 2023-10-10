@@ -3,10 +3,12 @@ import { Feather, Entypo } from "@expo/vector-icons";
 import { View, Text, StyleSheet, Button, TextInput, Keyboard, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
 
 
-const SearchBar = () => {
-    {
-        const [searchPhrase, setSearchPhrase] = useState("");
-        const [isFocus, setIsFocus] = useState(false)
+const SearchBar = (props) => {
+    {   
+        // const [searchPhrase, setSearchPhrase] = useState("");
+        const searchPhrase = props.search
+        const setSearchPhrase = props.setSearch
+        // const [isFocus, setIsFocus] = useState(false)
         return (
             <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
                 <View style={styles.container}>

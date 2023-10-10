@@ -13,9 +13,9 @@ import { useFonts } from "expo-font";
 
 const ModalReview = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [value1, setValue1] = useState("");
-  const [value2, setValue2] = useState("");
-  const [value3, setValue3] = useState("");
+  const [worth, setWorth] = useState("");
+  const [content, setContent] = useState("");
+  const [techniq, setTechniq] = useState("");
   const [additionalComments, setAdditionalComments] = useState("");
 
   const [loaded] = useFonts({
@@ -38,9 +38,9 @@ const ModalReview = () => {
   const submitReview = () => {
     // ทำการนำข้อมูลที่ผู้ใช้กรอกไปใช้งานต่อ
     console.log("Review submitted:", {
-      value1,
-      value2,
-      value3,
+      worth,
+      content,
+      techniq,
       additionalComments,
     });
     // ปิด Modal
@@ -75,8 +75,8 @@ const ModalReview = () => {
                     <TextInput
                       style={styles.input}
                       keyboardType="numeric"
-                      value={value1}
-                      onChangeText={(text) => setValue1(text)}
+                      value={worth}
+                      onChangeText={(text) => setWorth(text)}
                     />
                     <Text style={styles.text}>/10</Text>
                   </View>
@@ -95,8 +95,8 @@ const ModalReview = () => {
                     <TextInput
                       style={styles.input}
                       keyboardType="numeric"
-                      value={value2}
-                      onChangeText={(text) => setValue2(text)}
+                      value={content}
+                      onChangeText={(text) => setContent(text)}
                     />
                     <Text style={styles.text}>/10</Text>
                   </View>
@@ -115,8 +115,8 @@ const ModalReview = () => {
                     <TextInput
                       style={styles.input}
                       keyboardType="numeric"
-                      value={value3}
-                      onChangeText={(text) => setValue3(text)}
+                      value={techniq}
+                      onChangeText={(text) => setTechniq(text)}
                     />
                     <Text style={styles.text}>/10</Text>
                   </View>

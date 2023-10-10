@@ -4,12 +4,9 @@ import {
   Text,
   StyleSheet,
   TextInput,
-  ActivityIndicator,
-  Button,
-  KeyboardAvoidingView,
-  SafeAreaView,
   TouchableOpacity,
   Image,
+  ScrollView, // Import ScrollView
 } from "react-native";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -37,8 +34,7 @@ const Login = (prop: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
+    <ScrollView contentContainerStyle={styles.container}>
       <View style={[styles.flex, { width: "100%" }]}>
         <Image
           style={{ width: 200, height: 200, marginBottom: 20 }}
@@ -75,8 +71,7 @@ const Login = (prop: any) => {
           <Text style={{ color: "white" }}>Sign Up</Text>
         </TouchableOpacity>
       </View>
-      {/* </KeyboardAvoidingView> */}
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
@@ -89,16 +84,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    flex: 1,
+    flexGrow: 1, // Use flexGrow to allow content to scroll
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
     width: "100%",
-  },
-  h1: {
-    fontSize: 36,
-    fontWeight: "bold",
-    marginBottom: 20,
   },
   TextInput: {
     borderWidth: 1,

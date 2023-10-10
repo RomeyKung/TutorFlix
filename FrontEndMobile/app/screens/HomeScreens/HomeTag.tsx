@@ -38,23 +38,42 @@ const HomeTag = ({ navigation, route }) => {
         "3": "การเล่นเป็นทีม",
       },
     },
-  ]
+    {
+      idAcc: "NutThai",
+      title: "LOL",
+      type: "ความบันเทิง",
+      rating: 4.5,
+      price: 250,
+      lesson: {
+        "1": "เริ่มต้นการเล่น",
+        "2": "การเล่นเป็นทีม",
+        "3": "การเล่นเป็นทีม",
+      },
+    },
+  ];
   const type = route.params.type;
   const [allTag, setAllTag] = useState(data);
   const [tag, setTag] = useState([]);
+  const [search, setSearch] = useState("");
 
   // const [tag, setTag] = useState([]);
 
   useEffect(() => {
     // request data from cloud firebase
-    setTag(allTag.filter((item) => item.type === type));
-    console.log("setTag", tag);
-  }, []);
+    setTag(
+      allTag.filter((item) => {
+        // console.log("type", type);
+        // console.log("item.type", item.type);
+        // console.log("search.toLowerCase()", search.toLowerCase());
+        return item.type === type && item.title.toLowerCase().includes(search.toLowerCase());
+      })
+    );
+  }, [search]);
 
   return (
     <View>
       <View>
-        <SearchBar></SearchBar>
+        <SearchBar setSearch={setSearch} search={search} />
       </View>
       <FlatList
         data={tag}
@@ -63,7 +82,10 @@ const HomeTag = ({ navigation, route }) => {
             <Tag
               title={item.title}
               function={() =>
-                navigation.navigate("HomeTutor", { subject: item.title })
+                navigation.navigate("HomeTutor", {
+                  subject: item.title,
+                  subObj: item,
+                })
               }
             />
           </View>

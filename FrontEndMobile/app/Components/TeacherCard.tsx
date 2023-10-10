@@ -1,49 +1,55 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-interface TochProps {
+interface TeacherProps {
   // children?: React.ReactNode;
   function?: () => void;
   likeAlready?: any;
+  name: String;
+  title: String;
+  price: Number;
+  rating: Number;
+  img?: any;
 }
 
-
-function TeacherCard(props: TochProps) {
-  const teacherInfo = {
-    img: require("../../assets/img/Anya.jpg"),
-    name: "Anya",
-    subject: "Math",
-    cost: 200,
-    rating: 4.5,
-  };
+function TeacherCard(props: TeacherProps) {
+  const [name, setName] = useState<String>("anyone");
+  const [subject, setSubject] = useState<String>("subject");
+  const [price, setPrice] = useState<Number>(0);
+  const [rating, setRating] = useState<Number>(0);
+  const [img, setImg] = useState<any>(null);
 
   const [userFav, setUserFav] = useState<boolean>(props.likeAlready);
 
   const toggleFavorite = () => {
     setUserFav(!userFav);
   };
-
+  useEffect(() => {
+    setName(props.name);
+    setSubject(props.title);
+    setPrice(props.price);
+    setRating(props.rating);
+    {
+      props.img
+        ? setImg(props.img)
+        : setImg(require("../../assets/img/Anya.jpg"));
+    }
+  }, []);
 
   return (
     <TouchableOpacity style={styles.card} onPress={props.function}>
       <View style={styles.imgSide}>
-        <Image
-          style={styles.img}
-          source={teacherInfo.img}
-          resizeMode="contain"
-        />
+        <Image style={styles.img} source={img} resizeMode="contain" />
       </View>
 
       <View style={styles.info}>
-        <Text style={styles.text}>{teacherInfo.name}</Text>
-        <Text style={[styles.text, { color: "#4CA771" }]}>
-          {teacherInfo.subject}
-        </Text>
+        <Text style={styles.text}>{name}</Text>
+        <Text style={[styles.text, { color: "#4CA771" }]}>{subject}</Text>
         <Text style={[styles.text, { color: "#0487FF" }]}>
-          THB {teacherInfo.cost}/hr
+          THB {price.toString()}/hr
         </Text>
-        <View style={{ flexDirection: "row", justifyContent: "space-between"}}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={styles.rating}>
             <Image
               style={{ height: 25 }}
@@ -53,14 +59,14 @@ function TeacherCard(props: TochProps) {
             <Text
               style={[styles.text, { color: "#fff", fontWeight: "normal" }]}
             >
-              {teacherInfo.rating}
+              {rating.toString()}
             </Text>
           </View>
 
           {/* Favorite Button */}
           <Pressable onPress={toggleFavorite}>
             <MaterialCommunityIcons
-              style={{marginTop : 10}}
+              style={{ marginTop: 10 }}
               name={userFav ? "heart" : "heart-outline"}
               size={30}
               color={userFav ? "#FF0000" : "#000"}
@@ -96,8 +102,7 @@ const styles = StyleSheet.create({
   info: {
     flex: 1, // Take the remaining space in the card
     paddingHorizontal: 10, // Add some horizontal padding
-    marginHorizontal: 20
-    
+    marginHorizontal: 20,
   },
   text: {
     fontWeight: "800",

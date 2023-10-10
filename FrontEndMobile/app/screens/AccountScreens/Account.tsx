@@ -1,6 +1,6 @@
 import { NavigationProp } from "@react-navigation/native";
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, TextInput, Image } from "react-native";
+import { View, Text, Button, StyleSheet, TextInput, Image,ScrollView } from "react-native";
 import { FIREBASE_AUTH } from "../../../FirebaseConfig";
 import ModalReview from "../../Components/ModalReview";
 import ButtonCustom from "../../Components/ButtonCustom";
@@ -32,7 +32,7 @@ const Account = ({ navigation }: RouterProps) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.Profile}>
         <Image style={styles.img} source={UserInfo.img} resizeMode="contain" />
         <Text style={styles.txt}>{UserInfo.name}</Text>
@@ -83,13 +83,7 @@ const Account = ({ navigation }: RouterProps) => {
           />
         </View>
       </View>
-<<<<<<< Updated upstream:FrontEndMobile/app/screens/Account.tsx
-     
-      <ButtonCustom title="โพสต์" function={ ()=> navigation.navigate("PostScreen")}/>
-      <ButtonCustom title="แก้ไขโพสต์" function={ ()=> navigation.navigate("EditPost")}/>
-=======
->>>>>>> Stashed changes:FrontEndMobile/app/screens/AccountScreens/Account.tsx
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
@@ -101,7 +95,8 @@ const styles = StyleSheet.create({
   formBtn: {
     flexDirection: "column",
     justifyContent: "space-between",
-    height:"40%",
+    height:200,
+
     // borderWidth: 2,
     // borderColor: "black",
   },
