@@ -7,14 +7,36 @@ import {
   SafeAreaView,
   TouchableOpacity,
   KeyboardAvoidingView,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { FIREBASE_AUTH } from "../../../FirebaseConfig";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FirebaseConfig";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
-const Signup = (prop:any) => {
+const Signup = (prop, {navigation}: any) => {
+  //navigation
   const navigateToLogin = () => prop.navigation.navigate("Login");
+  const navigateToMain = () => prop.navigation.navigate("Main");
+
+  //logic for signup
   const [hiddenPassword, setHiddenPassword] = useState(true);
   const [isMatch, setIsMatch] = useState(true);
+  const handleValidPassword = (val: string) => {
+    if (val !== data.password) {
+      setIsMatch(false);
+    } else {
+      setIsMatch(true);
+    }
+  };
+  const [isPhone, setIsPhone] = useState(true);
+  const handleValidPhone = (val: string) => {
+    // ตรวจสอบว่าเป็นตัวเลขหรือไม่ และมีความยาวเท่ากับ 10 และเริ่มต้นด้วย 0
+    const isPhoneNumberValid = /^[0-9]{10}$/.test(val) && val.startsWith("0");
+    setIsPhone(isPhoneNumberValid);
+  };
+
   const [data, setData] = useState({
     email: "",
     confirmPassword: "",
@@ -22,13 +44,31 @@ const Signup = (prop:any) => {
     firstName: "",
     lastName: "",
     phone: "",
+    img: "",
   });
 
-  const handleValidPassword = (val: string) => {
-    if (val !== data.password) {
-      setIsMatch(false);
+  const addUserData = async (id: String, user: any) => {
+    try {
+      const { firstName, lastName, phone, email } = user;
+      const docRef = await setDoc(doc(FIREBASE_DB, "Users", id.toString()), {
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phone: phone,
+        history: "",
+        course: [],
+        img: Object,
+      });
+      console.log("id user", id);
+      // console.log("Document written with ID: ", docRef.id);
+
+    
+      return docRef;
+    } catch (err) {
+      console.log(err);
+
+      return false;
     }
-    setIsMatch(true);
   };
 
   const signUp = async () => {
@@ -36,26 +76,32 @@ const Signup = (prop:any) => {
     const { email, password } = data;
 
     try {
-      const response: any = await createUserWithEmailAndPassword(
+      // Create user with email and password
+      const response = await createUserWithEmailAndPassword(
         auth,
         email,
         password
       );
-      console.log(response);
+
+      // console.log("res: " + JSON.stringify(response));
+      console.log("resUser: " + JSON.stringify(response.user.uid));
+      // console.log(response);
+
+      //add UserData to DB
+      addUserData(response.user.uid, data);
+      navigateToMain();
       alert("Check your email for verification");
     } catch (err: any) {
       console.log(err);
-      alert("Sign in failed" + err.message);
-    } 
+      alert("Sign up failed: " + err.message);
+    }
   };
-  
-
-
 
   return (
-    <SafeAreaView style={styles.container}>
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <View style={[styles.flex, { width: "100%" }]}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <SafeAreaView style={styles.container}>
+        {/* <KeyboardAvoidingView behavior="padding" style={styles.container}> */}
+        <ScrollView>
           <Text style={styles.h1}>SIGN UP TO APP</Text>
           <TextInput
             style={styles.TextInput}
@@ -86,7 +132,13 @@ const Signup = (prop:any) => {
             inputMode="tel"
             value={data.phone}
             onChange={(e) => setData({ ...data, phone: e.nativeEvent.text })}
+            onEndEditing={(e) => handleValidPhone(e.nativeEvent.text)}
           />
+          {!isPhone && (
+            <Text style={{ color: "red" }}>
+              Must be 10 numbers and start with 0
+            </Text>
+          )}
           <TextInput
             style={styles.TextInput}
             placeholder="Password"
@@ -107,30 +159,21 @@ const Signup = (prop:any) => {
           {!isMatch && (
             <Text style={{ color: "red" }}>Password does not match</Text>
           )}
-        </View>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </ScrollView>
         <View style={{ flexDirection: "row", gap: 10 }}>
           <TouchableOpacity style={styles.btn} onPress={signUp}>
             <Text style={{ color: "white" }}>Sign Up</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.btn, { backgroundColor: "black" }]} onPress={navigateToLogin}>
+          <TouchableOpacity
+            style={[styles.btn, { backgroundColor: "black" }]}
+            onPress={navigateToLogin}
+          >
             <Text style={{ color: "white" }}>Back</Text>
           </TouchableOpacity>
         </View>
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+        {/* </KeyboardAvoidingView> */}
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 

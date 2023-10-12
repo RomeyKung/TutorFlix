@@ -56,7 +56,7 @@ const Account = ({ navigation }: RouterProps) => {
             onChangeText={(text) => setNewPhone(text)}
           />
         </View>
-        {/* <Button onPress={()=> FIREBASE_AUTH.signOut()} title="Logout"/> */}
+        <Button onPress={()=> FIREBASE_AUTH.signOut()} title="Logout"/>
       </View>
 
       <View style={styles.formBtn}>

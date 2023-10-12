@@ -15,9 +15,12 @@ const Login = (prop: any) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const auth = FIREBASE_AUTH;
+  //for navigation
   const navigateToSignUp = () => prop.navigation.navigate("Signup");
+  const navigateToMain = () => prop.navigation.navigate("Main");
 
+  //for firebase
+  const auth = FIREBASE_AUTH;
   const signIn = async () => {
     try {
       const response: any = await signInWithEmailAndPassword(
@@ -25,8 +28,11 @@ const Login = (prop: any) => {
         email,
         password
       );
-      await console.log(response);
-      alert("Check your email for verification");
+      // console.log("id user:" + response.user.uid);
+      
+
+      // alert("Check your email for verification");
+      navigateToMain();
     } catch (err: any) {
       console.log(err);
       alert("Sign in failed" + err.message);

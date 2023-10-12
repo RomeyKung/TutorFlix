@@ -16,16 +16,16 @@ const SearchTutor = ({ navigation, route }) => {
         <SearchBar />
       </View>
       <View style={styles.cardbox}>
-        {/* <TeacherCard
+        <TeacherCard
           // img={img}
-          name={idAcc}
-          title={title}
-          rating={rating}
-          price={price}
+          name={"rome"}
+          title={"rome"}
+          rating={5}
+          price={10}
           function={() =>
-            navigation.navigate("SearchTutorDetail", { subObj: subObj })
+            navigation.navigate("SearchTutorDetail")
           }
-        /> */}
+        />
       </View>
     </View>
   );

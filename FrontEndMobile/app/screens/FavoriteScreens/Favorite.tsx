@@ -6,7 +6,7 @@ const Favorite = (props: any) => {
   return (
     <View style={{backgroundColor:"#fff", height:"100%", alignItems:"center"}}>
         
-      <TeacherCard likeAlready={true}/>
+      <TeacherCard likeAlready={true} name={"rome"} title={"rome"} price={20} rating={5}/>
     </View>
   );
 };

@@ -69,8 +69,8 @@ const TutorDetail = () => {
                 </View>
                 <ButtonCustom title="เขียนรีวิว"></ButtonCustom>
             </View>
-            <ReviewCard></ReviewCard>
-            <ReviewCard></ReviewCard>
+            <ReviewCard/>
+            <ReviewCard/>
         </ScrollView>
     )
 }

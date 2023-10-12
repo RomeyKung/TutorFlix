@@ -1,22 +1,12 @@
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-//เอามาเล่นๆ ไม่ได้ใช้
-// import { getAnalytics } from "firebase/analytics";
-// const analytics = getAnalytics(FIREBASE_APP);
-
-
-
-// Import the functions you need from the SDKs you need
 //initializeApp คือ การเชื่อมต่อกับ Firebase โดยใช้ค่า config ที่ได้จากข้างบน
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import {
-  getAuth,
-  initializeAuth,
-  getReactNativePersistence,
-} from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import * as firebaseAuth from "firebase/auth";
+import { getAuth, initializeAuth } from "firebase/auth";
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 //Firebase configuration
@@ -30,16 +20,13 @@ const firebaseConfig = {
   measurementId: "G-EPZTQ0WG4D",
 };
 
+const reactNativePersistence = (firebaseAuth as any).getReactNativePersistence;
 
 // Initialize Firebase คือ การเชื่อมต่อกับ Firebase โดยใช้ค่า config ที่ได้จากข้างบน
 export const FIREBASE_APP = initializeApp(firebaseConfig);
-
-const auth = initializeAuth(FIREBASE_APP, {
-  persistence: getReactNativePersistence(ReactNativeAsyncStorage),
+initializeAuth(FIREBASE_APP, {
+  persistence: reactNativePersistence(ReactNativeAsyncStorage),
 });
-
-// สร้างตัวแปรเพื่อเรียกใช้งาน Firebase Authentication และ Firebase Firestore
 export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
 export const FIREBASE_DB = getFirestore(FIREBASE_APP);
-
-
+export const FIREBASE_STORAGE = getStorage(FIREBASE_APP);
