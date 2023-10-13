@@ -8,21 +8,24 @@ import {
   StyleSheet,
   TouchableWithoutFeedback,
   Image,
+  Alert,
+  KeyboardAvoidingView,
 } from "react-native";
 import ButtonCustom from "./ButtonCustom";
 import { useFonts } from "expo-font";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
+import { doc, updateDoc } from "@firebase/firestore";
+import { ScrollView } from "react-native-reanimated/lib/typescript/Animated";
 const ImgIcon = {
   fb: require("../../assets/img/fbicon.png"),
   line: require("../../assets/img/lineicon.png"),
   ig: require("../../assets/img/igicon1.png"),
 };
 
-const EditHistory = () => {
+const EditHistory = (props) => {
+  const { history, social, setHistory, setSocial } = props;
   const [isVisible, setIsVisible] = useState(false);
-  const [value1, setValue1] = useState("");
-  const [value2, setValue2] = useState("");
-  const [value3, setValue3] = useState("");
-  const [HistoryDetail, setHistoryDetail] = useState("");
+
 
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
@@ -40,21 +43,30 @@ const EditHistory = () => {
   const hideModal = () => {
     setIsVisible(false);
   };
+  const updateHistory = async () => {
+    const user = doc(FIREBASE_DB, "Users", FIREBASE_AUTH.currentUser?.uid);
+    await updateDoc(user, {
+      history: history,
+      social: social,
+    });
+    Alert.alert("อัปเดตข้อมูลเสร็จสิ้น");
+  };
+
+
 
   const SubmitHistory = () => {
     // ทำการนำข้อมูลที่ผู้ใช้กรอกไปใช้งานต่อ
     console.log("Review submitted:", {
-      value1,
-      value2,
-      value3,
-      HistoryDetail,
+      history,
+      social,
     });
+    updateHistory();
     // ปิด Modal
     hideModal();
   };
 
   return (
-    <View>
+    <Text>
       <ButtonCustom title="ใส่ข้อมูลประวัติ" function={showModal} />
       <Modal
         transparent={true}
@@ -75,8 +87,8 @@ const EditHistory = () => {
                     multiline
                     numberOfLines={4}
                     placeholder="รายละเอียด"
-                    value={HistoryDetail}
-                    onChangeText={(text) => setHistoryDetail(text)}
+                    value={history}
+                    onChangeText={(text) => setHistory(text)}
                   />
                 </View>
                 <View style = {styles.contactInfo}>
@@ -87,10 +99,10 @@ const EditHistory = () => {
                 />
                 <TextInput
                       style={styles.input}
-                      value={value1}
+                      value={social?.facebook}
                       placeholder="link Facebook"
-                      onChangeText={(text) => setValue1(text)}
-                    />
+                      onChangeText={(text) => setSocial({...social, facebook: text}) }
+                />
                     
                 </View>
                 <View style = {styles.contactInfo}>
@@ -101,9 +113,9 @@ const EditHistory = () => {
                 />
                 <TextInput
                       style={styles.input}
-                      value={value2}
+                      value={social?.IG}
                       placeholder="link Instagram"
-                      onChangeText={(text) => setValue2(text)}
+                      onChangeText={(text) => setSocial({...social, IG: text})}
                     />
                     
                 </View>
@@ -115,9 +127,9 @@ const EditHistory = () => {
                 />
                 <TextInput
                       style={styles.input}
-                      value={value3}
+                      value={social?.line}
                       placeholder="link LINE"
-                      onChangeText={(text) => setValue3(text)}
+                      onChangeText={(text) => setSocial({...social, line: text})}
                     />
                     
                 </View>
@@ -135,7 +147,7 @@ const EditHistory = () => {
           </View>
         </TouchableWithoutFeedback>
       </Modal>
-    </View>
+    </Text>
   );
 };
 

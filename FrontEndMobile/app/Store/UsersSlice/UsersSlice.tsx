@@ -2,44 +2,32 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { AnyAction, PayloadAction, Reducer } from "@reduxjs/toolkit";
 
 export interface UserState {
-  nameUser: String;
+  firstName: String;
+  lastName: String;
   email: String;
   phone: String;
   history: String;
-  course: any;
   social: any;
   favorite: any;
   img: object;
 }
 
 const initialState: UserState = {
-  nameUser: "",
+  firstName: "",
+  lastName: "",
   email: "",
   phone: "",
   history: "",
-  course: [],
   social: [],
   favorite: [],
   img: {},
 };
 
 export const userSlice = createSlice({
-  name: "users",
+  name: "user",
   initialState,
   reducers: {
-    storeUser: (
-      state,
-      action: PayloadAction<{
-        nameUser: String;
-        email: String;
-        phone: String;
-        history: String;
-        course: any;
-        social: any;
-        favorite: any;
-        img: object;
-      }>
-    ) => {
+    storeUser: (state, action) => {
       // ทำอะไรบางอย่างเมื่อ action "storeUser" ถูกเรียกใช้
       return action.payload;
     },

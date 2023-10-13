@@ -44,7 +44,8 @@ const Signup = (prop, {navigation}: any) => {
     firstName: "",
     lastName: "",
     phone: "",
-    img: "",
+    // img: "",
+    // social: [],
   });
 
   const addUserData = async (id: String, user: any) => {
@@ -56,10 +57,10 @@ const Signup = (prop, {navigation}: any) => {
         lastName: lastName,
         phone: phone,
         history: "",
-        course: [],
-        img: Object,
+        social: {},
+        img: {},
       });
-      console.log("id user", id);
+      // console.log("id user", id);
       // console.log("Document written with ID: ", docRef.id);
 
     
