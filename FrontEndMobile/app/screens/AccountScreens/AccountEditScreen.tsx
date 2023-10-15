@@ -1,24 +1,37 @@
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import ButtonCustom from "../../Components/ButtonCustom";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FirebaseConfig";
 
 const AccountEditScreen = ({ navigation }) => {
-  const [category, setCategory] = useState("วิชาการ");
   const [topic, setTopic] = useState("");
   const [content, setContent] = useState("");
   const [newTopic, setNewTopic] = useState(""); // เพิ่ม state สำหรับหัวข้อใหม่
-
-  const handleCategoryChange = (value) => {
-    setCategory(value);
-  };
+  const [postid, setPostid] = useState("");
 
   const handleTopicChange = (value) => {
     setTopic(value);
-    // เมื่อเลือก "เพิ่มหัวข้อใหม่" ใน drop-down หัวข้อ
-    // ให้ล้างค่าของหัวข้อที่สอนใน TextInput
-    if (value === "เพิ่มหัวข้อใหม่") {
+
+    if (value === "เลือกหัวข้อ") {
       setContent("");
+      setPostid(""); // เมื่อไม่มีคอร์สที่ถูกเลือกเป็นไปตามค่าว่าง
+    } else {
+      const selectedCourse = courseList.find(
+        (course) => course.topic === value
+      );
+
+      if (selectedCourse) {
+        setContent(selectedCourse.content);
+        setPostid(selectedCourse.postid); // เมื่อคอร์สถูกเลือก, กำหนดค่า postid
+      }
     }
   };
 
@@ -26,57 +39,116 @@ const AccountEditScreen = ({ navigation }) => {
     setContent(value);
   };
 
-  const handleNewTopicChange = (value) => {
-    setNewTopic(value); // เมื่อผู้ใช้พิมหัวข้อใหม่
+  const handleEditBlog = async () => {
+    try {
+      // เตรียมข้อมูลที่คุณต้องการอัปเดต
+      const updatedCourseData = {
+        topic: topic,
+        content: content,
+        // เพิ่มข้อมูลอื่น ๆ ตามที่คุณต้องการอัปเดต
+      };
+
+      // เรียก API หรือฟังก์ชันเซฟข้อมูล
+      // ยกตัวอย่างเช่น:
+      const courseRef = doc(FIREBASE_DB, "Courses", postid);
+      await updateDoc(courseRef, updatedCourseData);
+
+      // console.log("แก้ไขข้อมูลเรียบร้อยแล้ว");
+      Alert.alert("แก้ไขข้อมูลเรียบร้อยแล้ว");
+      navigation.goBack()
+    } catch (e) {
+      console.error("เกิดข้อผิดพลาดในการแก้ไขข้อมูล:", e);
+    }
   };
 
-  const handlePostBlog = () => {
-    // ทำสิ่งที่คุณต้องการเมื่อกดปุ่มโพสต์บล็อก
-    console.log("Category:", category);
-    console.log("Topic:", topic);
-    console.log("New Topic:", newTopic); // เพิ่มการแสดงค่าหัวข้อใหม่
-    console.log("Content:", content);
+  const [courseList, setCourseList] = useState([]);
+  const fetchCourse = async () => {
+    const courseCollection = collection(FIREBASE_DB, "Courses");
+    const courseSnapshot = await getDocs(courseCollection);
+    const courseList = courseSnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      postid: doc.id,
+    }));
+    setCourseList(courseList);
+    console.log("CourseList" + JSON.stringify(courseList));
+  };
+
+  useEffect(() => {
+    fetchCourse();
+  }, [topic]);
+
+  const handleRemoveBlog = (postid) => {
+    Alert.alert("ยืนยันการลบ", "คุณแน่ใจหรือไม่ที่ต้องการลบโพสต์นี้?", [
+      {
+        text: "ยกเลิก",
+        style: "cancel",
+      },
+      {
+        text: "ลบ",
+        onPress: async () => {
+          try {
+            const studentRef = doc(FIREBASE_DB, "Courses", postid);
+            await deleteDoc(studentRef);
+            console.log("ลบข้อมูลเรียบร้อยแล้ว");
+            navigation.navigate("view");
+          } catch (e) {
+            console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", e);
+          }
+        },
+      },
+    ]);
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
         <Text style={styles.title}>เลือกโพสต์:</Text>
-      <Picker
-        selectedValue={category}
-        onValueChange={handleCategoryChange}
-        style={styles.picker}
-        placeholder="เลือกโพสต์ของตัวเอง"
-      >
-        <Picker.Item label="วิชาการ" value="วิชาการ" />
-       
-      </Picker>
 
-      {/* <Text style={styles.title}>เลือกหัวข้อ:</Text>
-      <Picker selectedValue={topic} onValueChange={handleTopicChange}>
-        <Picker.Item label="เพิ่มหัวข้อใหม่" value="เพิ่มหัวข้อใหม่" />
-        <Picker.Item label="หัวข้อ1" value="หัวข้อ1" />
-        <Picker.Item label="หัวข้อ2" value="หัวข้อ2" />
-        <Picker.Item label="หัวข้อ3" value="หัวข้อ3" />
-      </Picker> */}
+        <Picker selectedValue={topic} onValueChange={handleTopicChange}>
+          <Picker.Item label="เลือกหัวข้อ" value="เลือกหัวข้อ" />
+          {courseList
+            .filter((course) => course.id === FIREBASE_AUTH.currentUser.uid) // กรองรายการคอร์สตามประเภทที่ถูกเลือก
+            .map((course) => (
+              <Picker.Item
+                label={course.topic}
+                value={course.topic}
+                key={course.topic}
+              />
+            ))}
+        </Picker>
 
-      <Text style={styles.title}>หัวข้อที่สอน:</Text>
-      <TextInput
-        style={styles.textArea}
-        placeholder="หัวข้อที่สอน"
-        onChangeText={handleContentChange}
-        value={content}
-      />
-        <View style ={styles.buttonContainer}>
-      <ButtonCustom title="ลบโพสต์"  color = "red" function={handlePostBlog} />
+        <Text style={styles.title}>หัวข้อที่สอน:</Text>
+        <TextInput
+          style={styles.textArea}
+          placeholder="หัวข้อที่สอน"
+          onChangeText={handleContentChange}
+          value={content}
+          multiline={true}
+          numberOfLines={4} // ปรับตามความต้องการ
+        />
+        <View style={styles.buttonContainer1}>
+          <View style={styles.buttonContainer2}>
+            <View style={{ height: 38, width: 140 }}></View>
+            {topic === "เลือกหัวข้อ" ? (
+              <View style={{ height: 38, width: 140 }}></View>
+            ) : (
+              <ButtonCustom
+                title="ลบโพสต์"
+                color="red"
+                function={() => handleRemoveBlog(postid)}
+              />
+            )}
+          </View>
+          <View style={styles.buttonContainer2}>
+            <ButtonCustom title="แก้ไขโพสต์" function={handleEditBlog} />
+            <ButtonCustom title="กลับ" function={() => navigation.goBack()} />
+          </View>
+        </View>
       </View>
-      <View style={styles.buttonContainer}>
-        <ButtonCustom title="แก้ไขโพสต์" function={handlePostBlog} />
-        <ButtonCustom title="กลับ" function={() => navigation.goBack()} />
-      </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
-
+export default AccountEditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,14 +188,16 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginBottom: 15,
   },
-  buttonContainer: {
+  buttonContainer1: {
+    gap: 40,
+    alignItems: "center",
+  },
+  buttonContainer2: {
     flexDirection: "row",
     justifyContent: "center",
-    columnGap: 40,
+    gap: 40,
     alignItems: "flex-end",
     // position: "absolute",
     // bottom: 0,
   },
 });
-
-export default AccountEditScreen;

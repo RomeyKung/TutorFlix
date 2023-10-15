@@ -56,10 +56,10 @@ const EditHistory = (props) => {
 
   const SubmitHistory = () => {
     // ทำการนำข้อมูลที่ผู้ใช้กรอกไปใช้งานต่อ
-    console.log("Review submitted:", {
-      history,
-      social,
-    });
+    // console.log("Review submitted:", {
+    //   history,
+    //   social,
+    // });
     updateHistory();
     // ปิด Modal
     hideModal();
@@ -89,6 +89,7 @@ const EditHistory = (props) => {
                     placeholder="รายละเอียด"
                     value={history}
                     onChangeText={(text) => setHistory(text)}
+                    
                   />
                 </View>
                 <View style = {styles.contactInfo}>

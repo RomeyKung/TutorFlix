@@ -11,7 +11,7 @@ import {
 import ButtonCustom from "./ButtonCustom";
 import { useFonts } from "expo-font";
 
-const ModalReview = () => {
+const ModalReview = (props) => {
   const [isVisible, setIsVisible] = useState(false);
   const [worth, setWorth] = useState("");
   const [content, setContent] = useState("");

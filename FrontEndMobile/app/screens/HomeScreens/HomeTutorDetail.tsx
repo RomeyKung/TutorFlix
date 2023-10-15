@@ -107,7 +107,7 @@ const HomeTutorDetail = ({ navigation, route }) => {
             รีวิวผู้สอน
           </Text>
         </View>
-        <ModalReview title="เขียนรีวิว"></ModalReview>
+        <ModalReview title="เขียนรีวิว"/>
       </View>
       <ReviewCard></ReviewCard>
       <ReviewCard></ReviewCard>
