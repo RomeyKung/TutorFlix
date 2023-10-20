@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-  Alert,
   FlatList,
 } from "react-native";
 import SearchBar from "../../Components/SearchBar";
@@ -17,16 +13,9 @@ const HomeTag = ({ navigation, route }) => {
   const courseAll = useSelector((state) => state.course.Courses);
   const category = route.params.type;
 
-  const [filterCat, setFilterCat] = useState([]);
   const [search, setSearch] = useState("");
 
-  useEffect(() => {
-    const filter = courseAll.filter(
-      (item) => item.category === category && item.topic.toLowerCase().includes(search.toLowerCase())
-    );
-    setFilterCat(filter);
-  }, [search]);
-
+  // ฟังก์ชันสำหรับดึงแท็กที่ไม่ซ้ำกัน
   const extractUniqueTopics = () => {
     // ดึงข้อมูล topic ทั้งหมดจากคอร์สในหมวดหมู่ที่เลือก
     const allTopics = courseAll
@@ -46,29 +35,27 @@ const HomeTag = ({ navigation, route }) => {
       {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}
       <FlatList
         data={extractUniqueTopics()}
-        renderItem={({ item }:any) => (
+        renderItem={({ item }) => (
           <View style={styles.textbox}>
             <Tag
               title={item}
               function={() =>
                 navigation.navigate("HomeTutor", {
                   // ส่งคอร์สที่มี topic เดียวกันไปยังหน้า HomeTutor
-                  courses: courseAll.filter(
-                    (course) => course.category === category && course.topic === item
-                  ),
+                  category: category,
+                  topic: item,
                 })
               }
             />
           </View>
         )}
-        keyExtractor={(item) => item.topic}
+        keyExtractor={(item) => item}
       />
     </View>
   );
 };
 
 export default HomeTag;
-
 
 const styles = StyleSheet.create({
   tagtext: {

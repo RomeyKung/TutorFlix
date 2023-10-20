@@ -5,75 +5,45 @@ import SearchBar from "../../Components/SearchBar";
 import { useSelector } from "react-redux";
 
 const HomeTutor = ({ navigation, route }) => {
-  const category = route.params.category;
+  const category = route.params.category; //บันเทิง
+  const topic = route.params.topic; // dota2
+
   const courseAll = useSelector((state) => state.course.Courses);
+  const courseTopic = courseAll.filter(
+    (item) => item.category === category && item.topic === topic
+  );
+  console.log(courseTopic);
 
-  // กรองคอร์สทั้งหมดในหมวดหมู่ที่เลือก
-  const coursesInCategory = courseAll.filter((course) => course.category === category);
 
-  // แบ่งคอร์สตามหัวข้อ (topic)
-  const topics = [...new Set(coursesInCategory.map((course) => course.topic))];
+  const [search, setSearch] = useState("");
+  return(
 
-  return (
     <View>
-      <View>
-        <SearchBar />
-      </View>
-      <View style={styles.cardbox}>
-        {topics.map((topic) => {
-          return (
-            <View key={topic}>
-              <Text style={styles.topicTitle}>{topic}</Text>
-              {coursesInCategory
-                .filter((course) => course.topic === topic)
-                .map((course) => {
-                  const {
-                    content,
-                    teacherInfo,
-                    courseId,
-                    rating,
-                    price,
-                    reviews,
-                  } = course;
+      <SearchBar setSearch={setSearch} search={search} />
+      <FlatList
+        data={courseTopic}
+        renderItem={({ item }) => (
+          console.log(item),
+          
+          // <TeacherCard
+          //   name={"test"}
+          //   topic={item.topic}
+          //   price={item.price}
+          //   rating={item.rating}
+          //   img={item.teacherInfo.img}
+          //   function={() =>
+          //     navigation.navigate("HomeTutorDetail", {
+          //       course: item,
+          //     })
+          //   }
+          // />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
 
-                  const teacher = teacherInfo[0];
-                  const { email, firstName, lastName, phone, img, social, history } = teacher;
-                  const imgPath = img.path;
-                  const { facebook, IG, line } = social;
-
-                  const courseForSend = {
-                    courseId,
-                    content,
-                    topic,
-                    email,
-                    firstName,
-                    lastName,
-                    phone,
-                    img: imgPath,
-                    social,
-                    rating: rating ? rating : 0,
-                    price,
-                    imgPath,
-                    facebook,
-                    IG,
-                    line,
-                    history,
-                    reviews,
-                  };
-
-                  return (
-                    <TeacherCard
-                      course={courseForSend}
-                      navigation={navigation}
-                      key={courseId}
-                    />
-                  );
-                })}
-            </View>
-          );
-        })}
-      </View>
     </View>
+
+
   );
 };
 
