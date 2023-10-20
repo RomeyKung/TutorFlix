@@ -1,60 +1,60 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Pressable,
-  Alert,
   FlatList,
 } from "react-native";
 import SearchBar from "../../Components/SearchBar";
 import Tag from "../../Components/Tag";
 import { useSelector } from "react-redux";
-const SearchTag = ({ navigation, route }) => {
-  //เอาข้อมูลจาก store.course มาใช้ โดยใช้ useSelector
-  console.log("//////////////////////////////////////////SearchTag//////////////////////////////////////////")
-  const courseAll = useSelector(state => state.course.Courses);
-  // console.log("courseAll", courseAll)
 
-  const [filterCat, setFilterCat] = useState([]);
+const SearchTag = ({ navigation, route }) => {
+  const courseAll = useSelector((state) => state.course.Courses);
+  // const category = route.params.type;
+
   const [search, setSearch] = useState("");
 
+  // ฟังก์ชันสำหรับดึงแท็กที่ไม่ซ้ำกัน
+  const extractUniqueTopics = () => {
+    // ดึงข้อมูล topic ทั้งหมดจากคอร์สในหมวดหมู่ที่เลือก
+    const allTopics = courseAll
 
-  useEffect(() => {
-    const filter = courseAll.filter((item) => item.topic.toLowerCase().includes(search.toLowerCase()));
-    setFilterCat(filter);
+      .map((item) => item.topic);
 
-  }, [search]);
-  console.log("filterCat", filterCat)
+    // ใช้ Set เพื่อลบข้อมูลที่ซ้ำกัน
+    const uniqueTopics = [...new Set(allTopics)];
+
+    return uniqueTopics;
+  };
 
   return (
     <View>
-      {/* <Text></Text> */}
-      <View>
-        <SearchBar setSearch={setSearch} search={search} />
-      </View>
+      <SearchBar setSearch={setSearch} search={search} />
+
+      {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}
       <FlatList
-        data={filterCat}
+        data={extractUniqueTopics()}
         renderItem={({ item }) => (
           <View style={styles.textbox}>
             <Tag
-              title={item.topic}
+              title={item.toString()}
               function={() =>
                 navigation.navigate("TagTutor", {
-                  course: item,
+                  // ส่งคอร์สที่มี topic เดียวกันไปยังหน้า HomeTutor
+          
+                  topic: item,
                 })
               }
             />
           </View>
         )}
-        keyExtractor={(item) => item.courseId}
+        keyExtractor={(item) => item}
       />
     </View>
-    // <Text>Test</Text>
   );
 };
+
 export default SearchTag;
 
 const styles = StyleSheet.create({

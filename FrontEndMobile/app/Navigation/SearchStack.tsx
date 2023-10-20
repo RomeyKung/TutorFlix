@@ -59,11 +59,11 @@ const SearchStack = (props: any) => {
         name="TagSearchStack"
         component={TagSearchStack}
       />
-      {/* <Top.Screen
+      <Top.Screen
         options={{ title: "ค้นหาจากผู้สอน" }}
         name="TutorSearchStack"
         component={TutorSearchStack}
-      /> */}
+      />
     </Top.Navigator>
   );
 };

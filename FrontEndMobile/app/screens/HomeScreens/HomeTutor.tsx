@@ -20,9 +20,10 @@ const HomeTutor = ({ navigation, route }) => {
   const [search, setSearch] = useState("");
   return(
 
-    <View>
+    <ScrollView>
       <SearchBar setSearch={setSearch} search={search} />
       <FlatList
+      scrollEnabled = {false}
         data={courseTopic}
         renderItem={({ item }) => (
           console.log(item),
@@ -44,7 +45,7 @@ const HomeTutor = ({ navigation, route }) => {
         keyExtractor={(item, index) => index.toString()}
       />
 
-    </View>
+    </ScrollView>
 
 
   );

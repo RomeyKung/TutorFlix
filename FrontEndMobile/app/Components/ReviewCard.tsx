@@ -42,6 +42,8 @@ const ReviewCard = (props) => {
     // code
     calculateRating(worth, content, techniq);
   }, []);
+  console.log( "Here2"+ uimg);
+  console.log(props.review)
 
   return (
     <View>

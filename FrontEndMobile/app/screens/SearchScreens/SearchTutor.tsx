@@ -1,72 +1,67 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, ScrollView, FlatList } from "react-native";
 import TeacherCard from "../../Components/TeacherCard";
 import SearchBar from "../../Components/SearchBar";
 import { useSelector } from "react-redux";
+
 const SearchTutor = ({ navigation, route }) => {
-  console.log(
-    "//////////////////////////////////////////SearchTutor//////////////////////////////////////////"
-  );
-  const [course, setCourse] = useState(route.params.course);
-  console.log("course:", course);
-  const content = course.content;
-  const topic = course.topic;
-  const teacherInfo = course.teacherInfo; 
-  // console.log("teacherInfo:", teacherInfo);
-  const { email, firstName, lastName, phone, img, social, history } = teacherInfo[0]; 
+  // const category = route.params.category; //บันเทิง
+  const topic = route.params?.topic; // dota2
+  // console.log(category);
+  console.log(topic);
+ 
+  const courseAll = useSelector((state) => state.course.Courses);
+  const courseTopic =  topic? courseAll.filter(
+    (item) =>item.topic === topic
+  ) : courseAll 
+  console.log(courseTopic);
 
-  const rating = course.rating ? course.rating : 0;
-  const price = course.price;
-  const imgPath = img.path;
-  const { facebook, IG, line } = social;
-  const reviews = course.reviews;
-  console.log("reviews:", reviews);
-  console.log("doc id:",course);
-  const courseForSend = {
-    courseId: course.courseId,
-    content: content,
-    topic: topic,
-    email: email,
-    firstName: firstName,
-    lastName: lastName,
-    phone: phone,
-    img: imgPath,
-    social: social,
-    rating: rating,
-    price: price,
-    imgPath: imgPath,
-    facebook: facebook,
-    IG: IG,
-    line: line,
-    history: history,
-    reviews: reviews,
-  };
 
-  return (
-    <View>
-      <View>
-        <SearchBar />
-      </View>
-      <View style={styles.cardbox}>
-        <TeacherCard
-          img={img}
-          name={firstName + " " + lastName}
-          topic={topic}
-          rating={rating}
-          price={price}
-          function={() =>
-            navigation.navigate("SearchTutorDetail", { course: courseForSend})
-          }
-        />
-      </View>
-    </View>
+  const [search, setSearch] = useState("");
+  return(
+
+    <ScrollView>
+      <SearchBar setSearch={setSearch} search={search} />
+      <FlatList
+    scrollEnabled = {false}
+        data={courseTopic}
+        renderItem={({ item }) => (
+          console.log(item),
+          console.log(item.teacherInfo[0].img.path),
+          
+          
+          <TeacherCard
+            name={item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName }
+            topic={item.topic}
+            price={item.price}
+            rating={item.rating? item.rating : 0}
+            img={item.teacherInfo[0].img.path}
+            function={() =>
+              navigation.navigate("SearchTutorDetail", {
+                course: item,
+              })
+            }
+          />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+      />
+
+    </ScrollView>
+
+
   );
 };
+
 export default SearchTutor;
 
 const styles = StyleSheet.create({
   cardbox: {
     flexDirection: "column",
     alignItems: "center",
+  },
+  topicTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
 });
