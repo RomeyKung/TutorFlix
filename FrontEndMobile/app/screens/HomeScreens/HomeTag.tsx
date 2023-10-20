@@ -61,7 +61,7 @@ const HomeTag = ({ navigation, route }) => {
             />
           </View>
         )}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.topic}
       />
     </View>
   );

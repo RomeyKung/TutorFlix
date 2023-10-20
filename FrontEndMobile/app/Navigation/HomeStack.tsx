@@ -22,7 +22,7 @@ const HomeStack = () => {
         name="HomeTutor"
         component={HomeTutor}
         options={({ route }: any) => ({
-          headerTitle: route.params.course.topic,
+          // headerTitle: route.params.course.topic,
         })}
       />
       <Stack.Screen name="HomeTutorDetail" component={HomeTutorDetail} />
