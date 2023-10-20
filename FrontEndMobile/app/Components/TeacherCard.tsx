@@ -31,7 +31,7 @@ function TeacherCard(props: TeacherProps) {
     setTopic(props.topic);
     setPrice(props.price);
     setRating(props.rating);
-    setImg(props.img.path);
+    setImg(props.img);
   }, []);
 
   return (

@@ -51,7 +51,10 @@ const HomeTutorDetail = ({ navigation, route }) => {
     line,
     content,
   } = route.params.course;
-  const name = firstName + " " + lastName;
+  console.log("HERE" + JSON.stringify(route.params.course.teacherInfo[0]))
+  const teacherInfo = route.params.course.teacherInfo[0];
+
+  const name = teacherInfo.firstName + " " + teacherInfo.lastName;
   const [ratingState, setRatingState] = useState(rating);
   const [reviewsState, setReviewsState] = useState(reviews);
   const [rerender, setRerender] = useState(false);
@@ -105,7 +108,7 @@ const HomeTutorDetail = ({ navigation, route }) => {
       <View style={styles.imgPosition}>
         <Image
           style={styles.img}
-          source={img ? { uri: img } : require("../../../assets/img/Anya.jpg")}
+          source={route.params.course.teacherInfo[0].img.path ? { uri: route.params.course.teacherInfo[0].img.path } : require("../../../assets/img/Anya.jpg")}
         ></Image>
       </View>
       <View style={styles.textSpace}>

@@ -38,7 +38,7 @@ const HomeTag = ({ navigation, route }) => {
         renderItem={({ item }) => (
           <View style={styles.textbox}>
             <Tag
-              title={item}
+              title={item.toString()}
               function={() =>
                 navigation.navigate("HomeTutor", {
                   // ส่งคอร์สที่มี topic เดียวกันไปยังหน้า HomeTutor
