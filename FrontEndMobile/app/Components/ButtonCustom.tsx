@@ -5,14 +5,16 @@ interface Props {
   function?: () => void;
   title: string;
   color?: string;
+  font?: string;
 }
 
 const ButtonCustom = (props: Props | null) => {
   const colorBtn = props.color? props.color : "#FFF";
+  const colorFont = props.font? props.font : "#000";
   return (
     <TouchableOpacity style={[styles.btn, {backgroundColor: colorBtn}]} onPress={props.function}>
-      <Text style={styles.title}>{props.title} </Text>
-      <MaterialIcons name="keyboard-arrow-down" size={24} color="black" />
+      <Text style={[styles.title, {color:colorFont}]}>{props.title} </Text>
+      <MaterialIcons name="keyboard-arrow-down" size={24} color={colorFont} />
     </TouchableOpacity>
   );
 };

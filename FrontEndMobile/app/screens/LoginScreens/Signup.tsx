@@ -15,7 +15,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FirebaseConfig";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 
-const Signup = (prop, {navigation}: any) => {
+const Signup = (prop, { navigation }: any) => {
   //navigation
   const navigateToLogin = () => prop.navigation.navigate("Login");
   const navigateToMain = () => prop.navigation.navigate("Main");
@@ -44,13 +44,18 @@ const Signup = (prop, {navigation}: any) => {
     firstName: "",
     lastName: "",
     phone: "",
-    // img: "",
-    // social: [],
+    img: {},
+    social: {},
   });
 
   const addUserData = async (id: String, user: any) => {
     try {
       const { firstName, lastName, phone, email } = user;
+      const img = {
+        name: "blank-profile.webp",
+        path: "https://firebasestorage.googleapis.com/v0/b/tutorflix-c64b4.appspot.com/o/images%2Fblank-profile.webp?alt=media&token=ad7c1084-a05f-4b22-a595-ddf2b39f9f82",
+      };
+
       const docRef = await setDoc(doc(FIREBASE_DB, "Users", id.toString()), {
         email: email,
         firstName: firstName,
@@ -58,12 +63,14 @@ const Signup = (prop, {navigation}: any) => {
         phone: phone,
         history: "",
         social: {},
-        img: {},
+        img: {
+          name: "blank-profile.webp",
+          path: "https://firebasestorage.googleapis.com/v0/b/tutorflix-c64b4.appspot.com/o/images%2Fblank-profile.webp?alt=media&token=ad7c1084-a05f-4b22-a595-ddf2b39f9f82",
+        },
       });
       // console.log("id user", id);
       // console.log("Document written with ID: ", docRef.id);
 
-    
       return docRef;
     } catch (err) {
       console.log(err);

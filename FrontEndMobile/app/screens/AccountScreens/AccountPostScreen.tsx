@@ -22,22 +22,19 @@ import {
 } from "firebase/firestore";
 
 const PostScreen = ({ navigation }) => {
-  //fetch all Course from firebase
-
   const [courseList, setCourseList] = useState([]);
   const fetchCourse = async () => {
     const courseCollection = collection(FIREBASE_DB, "Courses");
     const courseSnapshot = await getDocs(courseCollection);
     const courseList = courseSnapshot.docs.map((doc) => doc.data());
     setCourseList(courseList);
-    console.log("CourseList" + JSON.stringify(courseList));
   };
 
   const [category, setCategory] = useState("วิชาการ");
   const [topic, setTopic] = useState("เพิ่มหัวข้อใหม่");
   const [content, setContent] = useState("");
-  const [newTopic, setNewTopic] = useState(""); // เพิ่ม state สำหรับหัวข้อใหม่
-
+  const [newTopic, setNewTopic] = useState("");
+  const [price, setPrice] = useState(""); // เพิ่ม state สำหรับราคา
   useEffect(() => {
     fetchCourse();
   }, [category]);
@@ -48,22 +45,24 @@ const PostScreen = ({ navigation }) => {
 
   const handleTopicChange = (value) => {
     setTopic(value);
-    // เมื่อเลือก "เพิ่มหัวข้อใหม่" ใน drop-down หัวข้อ
-    // ให้ล้างค่าของหัวข้อที่สอนใน TextInput
     if (value === "เพิ่มหัวข้อใหม่") {
       setContent("");
     }
   };
 
   const handleContentChange = (value) => {
-    setContent(value); // เมื่อผู้ใช้พิมหัวข้อที่สอน
+    setContent(value);
   };
 
   const handleNewTopicChange = (value) => {
-    setNewTopic(value); // เมื่อผู้ใช้พิมหัวข้อใหม่
+    setNewTopic(value);
   };
 
-  const addCourse = async (category, topic, content) => {
+  const handlePriceChange = (value) => {
+    setPrice(value); // เมื่อผู้ใช้ใส่ราคา
+  };
+
+  const addCourse = async (category, topic, content, price) => {
     const courseCollection = collection(FIREBASE_DB, "Courses");
 
     try {
@@ -72,28 +71,26 @@ const PostScreen = ({ navigation }) => {
         category: category,
         topic: topic,
         content: content,
+        price: price, // เพิ่มราคา
       });
       console.log("Document added with ID: ", newDocRef.id);
     } catch (error) {
       console.error("Error adding document: ", error);
     }
   };
-  useEffect(() => {
-    fetchCourse();
-  }, [category]);
 
   const handlePostBlog = () => {
-    // ทำสิ่งที่คุณต้องการเมื่อกดปุ่มโพสต์บล็อก
-    console.log("///////////////////////////////////////");
-    console.log("Category:", category);
-    console.log("Topic:", topic);
-    console.log("New Topic:", newTopic); // เพิ่มการแสดงค่าหัวข้อใหม่
-    console.log("Content:", content);
+    // console.log("///////////////////////////////////////");
+    // console.log("Category:", category);
+    // console.log("Topic:", topic);
+    // console.log("New Topic:", newTopic);
+    // console.log("Content:", content);
+    // console.log("Price:", price); // แสดงราคา
 
     if (topic === "เพิ่มหัวข้อใหม่") {
-      addCourse(category, newTopic, content);
+      addCourse(category, newTopic, content, price); // ส่งราคาเข้าไป
     } else {
-      addCourse(category, topic, content);
+      addCourse(category, topic, content, price); // ส่งราคาเข้าไป
     }
   };
 
@@ -115,7 +112,7 @@ const PostScreen = ({ navigation }) => {
         <Picker selectedValue={topic} onValueChange={handleTopicChange}>
           <Picker.Item label="เพิ่มหัวข้อใหม่" value="เพิ่มหัวข้อใหม่" />
           {courseList
-            .filter((course) => course.category === category) // กรองรายการคอร์สตามประเภทที่ถูกเลือก
+            .filter((course) => course.category === category)
             .map((course) => (
               <Picker.Item
                 label={course.topic}
@@ -125,7 +122,7 @@ const PostScreen = ({ navigation }) => {
             ))}
         </Picker>
 
-        {topic === "เพิ่มหัวข้อใหม่" && ( // แสดง TextInput เมื่อเลือก "เพิ่มหัวข้อใหม่"
+        {topic === "เพิ่มหัวข้อใหม่" && (
           <View>
             <Text style={styles.title}>หัวข้อใหม่:</Text>
             <TextInput
@@ -144,7 +141,15 @@ const PostScreen = ({ navigation }) => {
           onChangeText={handleContentChange}
           value={content}
           multiline={true}
-          numberOfLines={4} // ปรับตามความต้องการ
+          numberOfLines={4}
+        />
+
+        <Text style={styles.title}>ราคา:</Text>
+        <TextInput
+          style={styles.textInput}
+          placeholder="ราคา"
+          onChangeText={handlePriceChange}
+          value={price}
         />
       </ScrollView>
       <View style={styles.buttonContainer}>
@@ -163,8 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingHorizontal: 16,
     paddingTop: 20,
-    justifyContent: "center", // จัดเรียง UI ตามแนวแนวตั้ง
-    // alignItems: 'center', // จัดเรียง UI ตามแนวนอน
+    justifyContent: "center",
   },
   picker: {
     width: "100%",
@@ -201,7 +205,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     columnGap: 40,
     alignItems: "flex-end",
-    // position: "absolute",
-    // bottom: 0,
   },
 });

@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image, ScrollView, FlatList } from "react-native";
 import TeacherCard from "../../Components/TeacherCard";
 import SearchBar from "../../Components/SearchBar";
-const HomeTutor = ({ navigation, route }) => {
-  const subObj = route.params.subObj;
-  const { idAcc, title, rating, price, lesson } = subObj;
+import { useSelector } from "react-redux";
 
-  useEffect(() => {
-    console.log(subObj)
-  }, []);
+const HomeTutor = ({ navigation, route }) => {
+  const category = route.params.category; // เพิ่มใหม่
+  console.log("category:", category);
+  const courseAll = useSelector((state) => state.course.Courses);
+
+  // กรองคอร์สทั้งหมดในหมวดหมู่ที่เลือก
+  const coursesInCategory = courseAll.filter((course) => course.category === category);
 
   return (
     <View>
@@ -16,22 +18,60 @@ const HomeTutor = ({ navigation, route }) => {
         <SearchBar />
       </View>
       <View style={styles.cardbox}>
-        <TeacherCard
-          // img={img}
-          name={idAcc}
-          title={title}
-          rating={rating}
-          price={price}
-          function={() =>
-            navigation.navigate("HomeTutorDetail", { subObj: subObj })
-          }
-        />
+        {coursesInCategory.map((course) => {
+          const {
+            content,
+            topic,
+            teacherInfo,
+            courseId,
+            rating,
+            price,
+            reviews,
+          } = course;
+
+          const teacher = teacherInfo[0];
+          const { email, firstName, lastName, phone, img, social, history } = teacher;
+          const imgPath = img.path;
+          const { facebook, IG, line } = social;
+
+          const courseForSend = {
+            courseId,
+            content,
+            topic,
+            email,
+            firstName,
+            lastName,
+            phone,
+            img: imgPath,
+            social,
+            rating: rating ? rating : 0,
+            price,
+            imgPath,
+            facebook,
+            IG,
+            line,
+            history,
+            reviews,
+          };
+
+          return (
+            <FlatList
+              data={coursesInCategory}
+              renderItem={({ item }) => (
+                <TeacherCard
+                  course={courseForSend}
+                  navigation={navigation}
+                  key={courseId}
+                />
+              )}
+             />
+          );
+        })}
       </View>
     </View>
   );
-
-  // return <SearchTutorSystem />;
 };
+
 export default HomeTutor;
 
 const styles = StyleSheet.create({

@@ -22,6 +22,7 @@ export {default as AccountEditScreen} from './AccountScreens/AccountEditScreen';
 //SearchStack
 ///////////////////////////////////////////////////////
 export {default as TagSearch} from './SearchScreens/SearchTag';
+// export {default as TagTutor} from './SearchScreens/SearchTutor';
 export {default as TutorSearch} from './SearchScreens/SearchTutor';
 export {default as SearchTutorDetail} from './SearchScreens/SearchTutorDetail';
 

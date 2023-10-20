@@ -4,8 +4,6 @@ import {
   TagSearch,
   TutorSearch,
   SearchTutorDetail,
-  HomeTutor,
-  
 } from "../screens/Index";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -13,7 +11,7 @@ const Top = createMaterialTopTabNavigator();
 const Stack = createStackNavigator();
 
 const TagSearchStack = () => {
-  const TagTutor = HomeTutor;
+ 
 
   return (
     <Stack.Navigator>
@@ -24,13 +22,13 @@ const TagSearchStack = () => {
       />
       <Stack.Screen
         name="TagTutor"
-        component={TagTutor}
-        options={({ route }) => ({ headerTitle: route.params.subject })}
+        component={TutorSearch}
+        // options={({ route }) => ({ headerTitle: route.params })}
       />
       <Stack.Screen
         name="SearchTutorDetail"
         component={SearchTutorDetail}
-        options={({ route }) => ({ headerTitle: route.params.subject })}
+        options={({ route }) => ({ headerTitle: route.params.course.topic })}
       />
     </Stack.Navigator>
   );
@@ -61,11 +59,11 @@ const SearchStack = (props: any) => {
         name="TagSearchStack"
         component={TagSearchStack}
       />
-      <Top.Screen
+      {/* <Top.Screen
         options={{ title: "ค้นหาจากผู้สอน" }}
         name="TutorSearchStack"
         component={TutorSearchStack}
-      />
+      /> */}
     </Top.Navigator>
   );
 };

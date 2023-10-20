@@ -11,90 +11,64 @@ import {
 } from "react-native";
 import SearchBar from "../../Components/SearchBar";
 import Tag from "../../Components/Tag";
+import { useSelector } from "react-redux";
 
 const HomeTag = ({ navigation, route }) => {
-  const data = [
-    {
-      idAcc: "NutThai",
-      title: "Dota2",
-      type: "ความบันเทิง",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-    {
-      idAcc: "Oak",
-      title: "C++",
-      type: "วิชาการ",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-    {
-      idAcc: "NutThai",
-      title: "LOL",
-      type: "ความบันเทิง",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-  ];
-  const type = route.params.type;
-  const [allTag, setAllTag] = useState(data);
-  const [tag, setTag] = useState([]);
+  const courseAll = useSelector((state) => state.course.Courses);
+  const category = route.params.type;
+
+  const [filterCat, setFilterCat] = useState([]);
   const [search, setSearch] = useState("");
 
-  // const [tag, setTag] = useState([]);
-
   useEffect(() => {
-    // request data from cloud firebase
-    setTag(
-      allTag.filter((item) => {
-        // console.log("type", type);
-        // console.log("item.type", item.type);
-        // console.log("search.toLowerCase()", search.toLowerCase());
-        return item.type === type && item.title.toLowerCase().includes(search.toLowerCase());
-      })
+    const filter = courseAll.filter(
+      (item) => item.category === category && item.topic.toLowerCase().includes(search.toLowerCase())
     );
+    setFilterCat(filter);
   }, [search]);
+
+  const extractUniqueTopics = () => {
+    // ดึงข้อมูล topic ทั้งหมดจากคอร์สในหมวดหมู่ที่เลือก
+    const allTopics = courseAll
+      .filter((item) => item.category === category)
+      .map((item) => item.topic);
+
+    // ใช้ Set เพื่อลบข้อมูลที่ซ้ำกัน
+    const uniqueTopics = [...new Set(allTopics)];
+
+    return uniqueTopics;
+  };
 
   return (
     <View>
-      <View>
-        <SearchBar setSearch={setSearch} search={search} />
-      </View>
+      <SearchBar setSearch={setSearch} search={search} />
+
+      {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}
       <FlatList
-        data={tag}
-        renderItem={({ item }) => (
+        data={extractUniqueTopics()}
+        renderItem={({ item }:any) => (
           <View style={styles.textbox}>
             <Tag
-              title={item.title}
+              title={item}
               function={() =>
                 navigation.navigate("HomeTutor", {
-                  subject: item.title,
-                  subObj: item,
+                  // ส่งคอร์สที่มี topic เดียวกันไปยังหน้า HomeTutor
+                  courses: courseAll.filter(
+                    (course) => course.category === category && course.topic === item
+                  ),
                 })
               }
             />
           </View>
         )}
+        keyExtractor={(item) => item}
       />
     </View>
   );
 };
+
 export default HomeTag;
+
 
 const styles = StyleSheet.create({
   tagtext: {

@@ -11,87 +11,48 @@ import {
 } from "react-native";
 import SearchBar from "../../Components/SearchBar";
 import Tag from "../../Components/Tag";
-
+import { useSelector } from "react-redux";
 const SearchTag = ({ navigation, route }) => {
-  const data = [
-    {
-      idAcc: "NutThai",
-      title: "Dota2",
-      type: "ความบันเทิง",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-    {
-      idAcc: "Oak",
-      title: "C++",
-      type: "วิชาการ",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-    {
-      idAcc: "NutThai",
-      title: "LOL",
-      type: "ความบันเทิง",
-      rating: 4.5,
-      price: 250,
-      lesson: {
-        "1": "เริ่มต้นการเล่น",
-        "2": "การเล่นเป็นทีม",
-        "3": "การเล่นเป็นทีม",
-      },
-    },
-  ];
+  //เอาข้อมูลจาก store.course มาใช้ โดยใช้ useSelector
+  console.log("//////////////////////////////////////////SearchTag//////////////////////////////////////////")
+  const courseAll = useSelector(state => state.course.Courses);
+  // console.log("courseAll", courseAll)
 
-  const [allTag, setAllTag] = useState(data);
-  const [tag, setTag] = useState([]);
+  const [filterCat, setFilterCat] = useState([]);
   const [search, setSearch] = useState("");
 
-  // const [tag, setTag] = useState([]);
 
   useEffect(() => {
-    // request data from cloud firebase and setToAllTag
-    setTag(
-      allTag.filter((item) => {
-        // console.log("type", type);
-        // console.log("item.type", item.type);
-        // console.log("search.toLowerCase()", search.toLowerCase());
-        return item.title.toLowerCase().includes(search.toLowerCase());
-      })
-    );
+    const filter = courseAll.filter((item) => item.topic.toLowerCase().includes(search.toLowerCase()));
+    setFilterCat(filter);
+
   }, [search]);
+  console.log("filterCat", filterCat)
 
   return (
     <View>
+      {/* <Text></Text> */}
       <View>
         <SearchBar setSearch={setSearch} search={search} />
       </View>
       <FlatList
-        data={tag}
+        data={filterCat}
         renderItem={({ item }) => (
           <View style={styles.textbox}>
             <Tag
-              title={item.title}
+              title={item.topic}
               function={() =>
-                navigation.navigate("TagSearchTutor", {
-                  subject: item.title,
-                  subObj: item,
+                navigation.navigate("TagTutor", {
+                  course: item,
                 })
               }
             />
           </View>
         )}
+        keyExtractor={(item) => item.courseId}
       />
     </View>
+    // <Text>Test</Text>
   );
 };
 export default SearchTag;

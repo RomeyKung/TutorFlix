@@ -7,7 +7,7 @@ interface TeacherProps {
   function?: () => void;
   likeAlready?: any;
   name: String;
-  title: String;
+  topic: String;
   price: Number;
   rating: Number;
   img?: any;
@@ -15,7 +15,7 @@ interface TeacherProps {
 
 function TeacherCard(props: TeacherProps) {
   const [name, setName] = useState<String>("anyone");
-  const [subject, setSubject] = useState<String>("subject");
+  const [topic, setTopic] = useState<String>("topic");
   const [price, setPrice] = useState<Number>(0);
   const [rating, setRating] = useState<Number>(0);
   const [img, setImg] = useState<any>(null);
@@ -26,26 +26,27 @@ function TeacherCard(props: TeacherProps) {
     setUserFav(!userFav);
   };
   useEffect(() => {
+    // console.log(props.img)
     setName(props.name);
-    setSubject(props.title);
+    setTopic(props.topic);
     setPrice(props.price);
     setRating(props.rating);
-    {
-      props.img
-        ? setImg(props.img)
-        : setImg(require("../../assets/img/Anya.jpg"));
-    }
+    setImg(props.img.path);
   }, []);
 
   return (
     <TouchableOpacity style={styles.card} onPress={props.function}>
       <View style={styles.imgSide}>
-        <Image style={styles.img} source={img} resizeMode="contain" />
+        <Image
+          style={styles.img}
+          source={img ? { uri: img } : require("../../assets/img/Anya.jpg")}
+          resizeMode="contain"
+        />
       </View>
 
       <View style={styles.info}>
         <Text style={styles.text}>{name}</Text>
-        <Text style={[styles.text, { color: "#4CA771" }]}>{subject}</Text>
+        <Text style={[styles.text, { color: "#4CA771" }]}>{topic}</Text>
         <Text style={[styles.text, { color: "#0487FF" }]}>
           THB {price.toString()}/hr
         </Text>

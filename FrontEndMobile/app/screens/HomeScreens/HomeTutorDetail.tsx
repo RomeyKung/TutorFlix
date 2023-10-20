@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -7,44 +7,110 @@ import {
   Image,
   Button,
   Pressable,
+  FlatList,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import ButtonCustom from "../../Components/ButtonCustom";
 import ReviewCard from "../../Components/ReviewCard";
 import ModalReview from "../../Components/ModalReview";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FirebaseConfig";
+import { collection, getDocs, updateDoc } from "firebase/firestore";
+import { useSelector, useDispatch } from "react-redux";
+import { updateRating } from "../../Store/UsersSlice/CoursesSlice";
 
 const HomeTutorDetail = ({ navigation, route }) => {
-  const [img, setImg] = React.useState(
-    require("../../../assets/img/Anya.jpg")
-  );
-  const [name, setName] = React.useState("Anya");
-  const [subject, setSubject] = React.useState("Math");
-  const [price, setPrice] = React.useState(200);
-  const [rating, setRating] = React.useState(4.5);
-
-  useEffect(() => {
-    const subObj = route.params.subObj;
-    const { idAcc, title, rating, price, lesson } = subObj;
-    setName(idAcc);
-    setSubject(title);
-    setPrice(price);
-    setRating(rating);
-  }, []);
-  //imgIcon
-  const imgIcon = {
-    fb: require("../../../assets/icons/facebook_icon.png"),
-    line: require("../../../assets/icons/line_icon.png"),
-    instagram: require("../../../assets/icons/instagram_icon.png"),
+  //////////////////////////////////////////////////////////////////////////////////////
+  //For user
+  const storeUser = useSelector((state: any) => state.user);
+  const uid = FIREBASE_AUTH.currentUser.uid;
+  const uimg = storeUser.img.path;
+  const ufirstName = storeUser.firstName;
+  const ulastName = storeUser.lastName;
+  const uName = ufirstName + " " + ulastName;
+  const packUser = {
+    uid: uid,
+    img: uimg,
+    ufirstName: ufirstName,
+    ulastName: ulastName,
+    uname: uName,
+  };
+  /////////////////////////////////////////////////////////////////////////////////////////
+  //set Data for detail page
+  const {
+    img,
+    firstName,
+    lastName,
+    topic,
+    price,
+    rating,
+    history,
+    courseId,
+    reviews,
+    facebook,
+    IG,
+    line,
+    content,
+  } = route.params.course;
+  const name = firstName + " " + lastName;
+  const [ratingState, setRatingState] = useState(rating);
+  const [reviewsState, setReviewsState] = useState(reviews);
+  const [rerender, setRerender] = useState(false);
+  const allPeople = reviewsState.length;
+  const setRatingToDB = async (starRating) => {
+    console.log("starRating:", starRating);
+    try {
+      const courseRef = collection(FIREBASE_DB, "Courses");
+      const courseDoc = await getDocs(courseRef);
+      courseDoc.forEach((doc) => {
+        if (doc.id === courseId) {
+          const courseRef = collection(FIREBASE_DB, "Courses");
+          const courseDoc = doc;
+          updateDoc(doc.ref, {
+            rating: starRating,
+          });
+        }
+      });
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาดในการอัปเดตคอร์ส:", error);
+    }
   };
 
+  let ans = 0;
+  const calculateRating = (worth, content, techniq) => {
+    // console.log("/////////////////////////////");
+    // console.log("worth", worth);
+    // console.log("content", content);
+    // console.log("techniq", techniq);
+    const sumValue = (
+      (parseFloat(worth) + parseFloat(content) + parseFloat(techniq)) /
+      30
+    ).toFixed(2);
+    console.log("sumValue", sumValue);
+    ans = ans + parseFloat(sumValue);
+    // console.log("ans", ans);
+    let star = (ans / allPeople) * 5;
+    setRatingState(star);
+    setRatingToDB(star);
+  };
+  // console.log("ratingState", ratingState);
+  useEffect(() => {
+    setReviewsState(reviews);
+  }, [rerender]);
+
   return (
-    <ScrollView>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      style={{ backgroundColor: "white" }}
+    >
       <View style={styles.imgPosition}>
-        <Image style={styles.img} source={img}></Image>
+        <Image
+          style={styles.img}
+          source={img ? { uri: img } : require("../../../assets/img/Anya.jpg")}
+        ></Image>
       </View>
       <View style={styles.textSpace}>
         <Text style={[styles.text]}>{name}</Text>
-        <Text style={[styles.text, { color: "#4CA771" }]}>{subject}</Text>
+        <Text style={[styles.text, { color: "#4CA771" }]}>{topic}</Text>
         <Text style={[styles.text, { color: "#0487FF" }]}>{price} THB/HR</Text>
       </View>
       <View
@@ -61,17 +127,29 @@ const HomeTutorDetail = ({ navigation, route }) => {
             resizeMode="contain"
           />
           <Text style={[styles.text, { color: "#fff", fontWeight: "normal" }]}>
-            {rating}
+            {ratingState}
           </Text>
         </View>
       </View>
       <View style={styles.infoSection}>
         <View style={styles.contactPosition}>
-          <Image style={styles.iconImg} source={imgIcon.fb}></Image>
-          <Image style={styles.iconImg} source={imgIcon.line}></Image>
-          <Image style={styles.iconImg} source={imgIcon.instagram}></Image>
+          <Image
+            style={styles.iconImg}
+            source={require("../../../assets/icons/facebook_icon.png")}
+          ></Image>
+          <Text style={{ paddingRight: 10 }}>{facebook}</Text>
+          <Image
+            style={styles.iconImg}
+            source={require("../../../assets/icons/line_icon.png")}
+          ></Image>
+          <Text style={{ paddingRight: 10 }}>{line}</Text>
+          <Image
+            style={styles.iconImg}
+            source={require("../../../assets/icons/instagram_icon.png")}
+          ></Image>
+          <Text style={{ paddingRight: 10 }}>{IG}</Text>
         </View>
-        <ButtonCustom title="ดูประวัติ"></ButtonCustom>
+        {/* <ButtonCustom title="ดูประวัติ"></ButtonCustom> */}
       </View>
       <View
         style={[
@@ -85,10 +163,16 @@ const HomeTutorDetail = ({ navigation, route }) => {
           </Text>
         </View>
         <View>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur. Elit egestas urna
-            consectetur mus amet a. Tellus risus id id{" "}
+          <Text>{history}</Text>
+        </View>
+
+        <View>
+          <Text style={{ fontSize: 25, fontWeight: "bold", paddingBottom: 10 }}>
+            หัวข้อที่สอน
           </Text>
+        </View>
+        <View>
+          <Text>{content}</Text>
         </View>
       </View>
       <View
@@ -107,10 +191,30 @@ const HomeTutorDetail = ({ navigation, route }) => {
             รีวิวผู้สอน
           </Text>
         </View>
-        <ModalReview title="เขียนรีวิว"/>
+        <ModalReview
+          title="เขียนรีวิว"
+          courseId={courseId}
+          packUser={packUser}
+          rerender={rerender}
+          setRerender={setRerender}
+        />
       </View>
-      <ReviewCard></ReviewCard>
-      <ReviewCard></ReviewCard>
+      {/* <Text>reviews: {JSON.stringify(reviewsState)}</Text> */}
+
+      <FlatList
+        data={reviewsState}
+        renderItem={({ item }) => (
+          // <View style={styles.textbox}>
+          <ReviewCard
+            review={item}
+        
+            calculateRating={calculateRating}
+          />
+          // </View>
+        )}
+        keyExtractor={(item) => item.reviewId}
+        scrollEnabled={false}
+      />
     </ScrollView>
   );
 };

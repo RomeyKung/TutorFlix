@@ -10,8 +10,26 @@ import {
 } from "react-native";
 import ButtonCustom from "./ButtonCustom";
 import { useFonts } from "expo-font";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { FIREBASE_DB } from "../../FirebaseConfig";
 
 const ModalReview = (props) => {
+  //for foce rerender
+  const rerender = props.rerender;
+  const setRerender = props.setRerender;
+
+  const courseId = props.courseId;
+  const userReview = props.packUser;
+  const { uid, img, ufirstName, ulastName, uname } = userReview;
+
+  // const userName = props.userName;
   const [isVisible, setIsVisible] = useState(false);
   const [worth, setWorth] = useState("");
   const [content, setContent] = useState("");
@@ -20,19 +38,49 @@ const ModalReview = (props) => {
 
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
-    "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
+    PakkadThin: require("../../assets/fonts/PakkadThin.ttf"),
   });
 
   if (!loaded) {
     return <Text style={styles.text}>Loading fonts...</Text>;
   }
-
   const showModal = () => {
     setIsVisible(true);
   };
-
   const hideModal = () => {
     setIsVisible(false);
+  };
+
+  const addReview = async () => {
+    try {
+      const reviewsCollection = collection(FIREBASE_DB, "Reviews");
+      const newReview = {
+        // userReview: userReview,
+        userName: uname,
+        userId: uid,
+        uimg: img,
+        ufirstName: ufirstName,
+        ulastName: ulastName,
+
+        courseId: courseId,
+        worth: worth,
+        content: content,
+        techniq: techniq,
+        additionalComments: additionalComments,
+      };
+
+      // เพิ่มเรื่องรีวิวใหม่ในคอลเลคชัน "Reviews" และรับ ID ที่ถูกสร้างโดยอัตโนมัติ
+      const newReviewRef = await addDoc(reviewsCollection, newReview);
+      console.log("Review added with ID: ", newReviewRef.id);
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
+  };
+  const clearReview = () => {
+    setWorth("");
+    setContent("");
+    setTechniq("");
+    setAdditionalComments("");
   };
 
   const submitReview = () => {
@@ -43,8 +91,11 @@ const ModalReview = (props) => {
       techniq,
       additionalComments,
     });
+    addReview();
     // ปิด Modal
+    setRerender(!rerender);
     hideModal();
+    clearReview();
   };
 
   return (
@@ -160,7 +211,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
   modalContent: {
-   
     backgroundColor: "#fff",
     padding: 20,
     borderRadius: 10,
