@@ -19,8 +19,9 @@ const SearchTag = ({ navigation, route }) => {
   const extractUniqueTopics = () => {
     // ดึงข้อมูล topic ทั้งหมดจากคอร์สในหมวดหมู่ที่เลือก
     const allTopics = courseAll
-
+      .filter((item) => item.topic.toLowerCase().includes(search.toLowerCase()))
       .map((item) => item.topic);
+      
 
     // ใช้ Set เพื่อลบข้อมูลที่ซ้ำกัน
     const uniqueTopics = [...new Set(allTopics)];

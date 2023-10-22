@@ -18,12 +18,21 @@ const SearchTutor = ({ navigation, route }) => {
   // console.log(topic);
 
   const courseAll = useSelector((state) => state.course.Courses);
-  const courseTopic = topic
-    ? courseAll.filter((item) => item.topic === topic)
-    : courseAll;
-  // console.log(courseTopic);
-
   const [search, setSearch] = useState("");
+  const courseTopic = topic
+    ? courseAll.filter((item) => {
+        const fullName = item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName;
+        return fullName.toLowerCase().includes(search.toLowerCase());
+      })
+    : courseAll.filter((item) => {
+        const fullName = item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName;
+        return fullName.toLowerCase().includes(search.toLowerCase());
+      });
+  // console.log(courseTopic);
+  // useEffect(() => {
+  //   setSearch("");
+  // }, [search]);
+  
   return (
     <ScrollView>
       <SearchBar setSearch={setSearch} search={search} />
@@ -33,7 +42,7 @@ const SearchTutor = ({ navigation, route }) => {
         renderItem={({ item }) => (
           // console.log(item),
           // console.log(item.teacherInfo[0].img.path),
-
+          <View style={{alignItems: "center"}}>
           <TeacherCard
             courseId={item.courseId}
             item={item}
@@ -50,6 +59,7 @@ const SearchTutor = ({ navigation, route }) => {
               })
             }
           />
+          </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />
