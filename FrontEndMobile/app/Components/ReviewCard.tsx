@@ -55,7 +55,7 @@ const ReviewCard = (props) => {
           ></Image>
         </View>
         <View style={styles.textSpace}>
-          <Text style={{ paddingLeft: 20, paddingBottom: 10 }}>{userName}</Text>
+          <Text style={{ paddingVertical: 10 }}>{userName}</Text>
         </View>
       </View>
       <View style={[styles.textSpace, { flexDirection: "column", gap: 10 }]}>
