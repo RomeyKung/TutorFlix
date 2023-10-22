@@ -19,7 +19,7 @@ interface TeacherProps {
 
 function TeacherCard(props: TeacherProps) {
   const courseId = props.courseId;
-  console.log("//////////////////TeacherCard//////////////////===>", courseId);
+  // console.log("//////////////////TeacherCard//////////////////===>", courseId);
   // console.log("courseIdCurrentCard:", courseId);
   const [name, setName] = useState<String>("anyone");
   const [topic, setTopic] = useState<String>("topic");
@@ -27,7 +27,7 @@ function TeacherCard(props: TeacherProps) {
   const [rating, setRating] = useState<Number>(0);
   const [img, setImg] = useState<any>(null);
   const item = props.item;
-  console.log("item:", item);
+  // console.log("item:", item);
 
   const [userFav, setUserFav] = useState<boolean>(props.likeAlready);
 //toggle ui
@@ -44,7 +44,7 @@ function TeacherCard(props: TeacherProps) {
       // เช็คว่าคอร์สปัจจุบันอยู่ในรายการ favorite หรือไม่
       
       const isFavorite = userNow.data().favorite.some( course => course.courseId === courseId);
-      console.log("isFavorite:", isFavorite);
+      // console.log("isFavorite:", isFavorite);
       // console.log("courseIdinside:", courseId);
       setUserFav(isFavorite);
     }
@@ -53,9 +53,9 @@ function TeacherCard(props: TeacherProps) {
   const addToDB = async () => {
     const userRef = doc(FIREBASE_DB, "Users", FIREBASE_AUTH.currentUser.uid);
     const userNow = await getDoc(userRef);
-    console.log("userNow:", userNow.data().favorite);
+    // console.log("userNow:", userNow.data().favorite);
     if (userNow.data().favorite == undefined) {
-      console.log("itemInFunction:", item),
+      // console.log("itemInFunction:", item),
       await updateDoc(userRef, {
         favorite: [
           {
@@ -105,13 +105,13 @@ function TeacherCard(props: TeacherProps) {
   const toggleFavInDB = () => {
     if (userFav) {
       // remove from favorite
-      console.log("remove from favorite");
+      // console.log("remove from favorite");
       removeFromDB();
     } else {
       // add to favorite
       addToDB();
       toggleFavorite();
-      console.log("add to favorite");
+      // console.log("add to favorite");
     }
   };
 

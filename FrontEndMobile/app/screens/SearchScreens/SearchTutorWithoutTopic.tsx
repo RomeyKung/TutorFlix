@@ -6,21 +6,21 @@ import { useSelector } from "react-redux";
 
 const HomeTutor = ({ navigation, route }) => {
   console.log("//////////////////HomeTutor//////////////////");
-  const category = route.params.category; //บันเทิง
-  const topic = route.params.topic; // dota2
+
   const [search, setSearch] = useState("");
   const courseAll = useSelector((state) => state.course.Courses);
   const [courseTopic, setCourseTopic] = useState(courseAll);
 
   useEffect(() => {
     const filteredCourse = courseAll.filter(
-      (item) =>
-        item.category === category &&
-        item.topic === topic &&
-        item.teacherInfo[0].firstName.toLowerCase().includes(search.toLowerCase())
+      (item) =>{
+        const fullname = item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName
+
+       return fullname.toLowerCase().includes(search.toLowerCase())
+      }
     );
     setCourseTopic(filteredCourse);
-  }, [search, category, topic, courseAll]);
+  }, [search, courseAll]);
 
   return (
     <ScrollView>
@@ -40,7 +40,7 @@ const HomeTutor = ({ navigation, route }) => {
             rating={item.rating ? item.rating : 0}
             img={item.teacherInfo[0].img.path}
             function={() =>
-              navigation.navigate("HomeTutorDetail", {
+              navigation.navigate("SearchTutorDetail", {
                 course: item,
               })
             }

@@ -51,7 +51,7 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
     line,
     content,
   } = route.params.course;
-  console.log("HERE" + JSON.stringify(route.params.course.teacherInfo[0]))
+  // console.log("HERE" + JSON.stringify(route.params.course.teacherInfo[0]))
   const teacherInfo = route.params.course.teacherInfo[0];
 
   const name = teacherInfo.firstName + " " + teacherInfo.lastName;

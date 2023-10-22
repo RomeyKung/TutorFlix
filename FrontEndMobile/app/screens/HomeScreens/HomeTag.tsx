@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard } from "react-native";
 import SearchBar from "../../Components/SearchBar";
 import Tag from "../../Components/Tag";
 import { useSelector } from "react-redux";
@@ -12,14 +7,17 @@ import { useSelector } from "react-redux";
 const HomeTag = ({ navigation, route }) => {
   const courseAll = useSelector((state) => state.course.Courses);
   const category = route.params.type;
-
   const [search, setSearch] = useState("");
 
   // ฟังก์ชันสำหรับดึงแท็กที่ไม่ซ้ำกัน
   const extractUniqueTopics = () => {
     // ดึงข้อมูล topic ทั้งหมดจากคอร์สในหมวดหมู่ที่เลือก
     const allTopics = courseAll
-      .filter((item) => item.category === category)
+      .filter(
+        (item) =>
+          item.category === category &&
+          item.topic.toLowerCase().includes(search.toLowerCase())
+      )
       .map((item) => item.topic);
 
     // ใช้ Set เพื่อลบข้อมูลที่ซ้ำกัน
@@ -29,14 +27,13 @@ const HomeTag = ({ navigation, route }) => {
   };
 
   return (
-    <View>
-      <SearchBar setSearch={setSearch} search={search} />
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View>
+        <SearchBar setSearch={setSearch} search={search} />
 
-      {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}
-      <FlatList
-        data={extractUniqueTopics()}
-        renderItem={({ item }) => (
-          <View style={styles.textbox}>
+        {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}
+        {extractUniqueTopics().map((item, index) => (
+          <View style={styles.textbox} key={index}>
             <Tag
               title={item.toString()}
               function={() =>
@@ -48,10 +45,9 @@ const HomeTag = ({ navigation, route }) => {
               }
             />
           </View>
-        )}
-        keyExtractor={(item) => item}
-      />
-    </View>
+        ))}
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

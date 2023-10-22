@@ -26,5 +26,6 @@ export {default as TagSearch} from './SearchScreens/SearchTag';
 // export {default as TagTutor} from './SearchScreens/SearchTutor';
 export {default as TutorSearch} from './SearchScreens/SearchTutor';
 export {default as SearchTutorDetail} from './SearchScreens/SearchTutorDetail';
+export {default as SearchTutorWithoutTopic} from './SearchScreens/SearchTutorWithoutTopic';
 
 ///////////////////////////////////////////////////////

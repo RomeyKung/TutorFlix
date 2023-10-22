@@ -21,6 +21,7 @@ import {
 import { FIREBASE_DB } from "../../FirebaseConfig";
 
 const ModalReview = (props) => {
+  // console.log("///////////ModalReview///////////");
   //for foce rerender
   const rerender = props.rerender;
   const setRerender = props.setRerender;

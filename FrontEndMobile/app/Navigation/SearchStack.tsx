@@ -4,6 +4,7 @@ import {
   TagSearch,
   TutorSearch,
   SearchTutorDetail,
+  SearchTutorWithoutTopic,
 } from "../screens/Index";
 import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -39,7 +40,7 @@ const TutorSearchStack = () => {
     <Stack.Navigator>
       <Stack.Screen
         name="TutorSearch"
-        component={TutorSearch}
+        component={SearchTutorWithoutTopic}
         options={{ headerTitle: "ค้นหาจากผู้สอน" }}
       />
       <Stack.Screen name="SearchTutorDetail" component={SearchTutorDetail} />

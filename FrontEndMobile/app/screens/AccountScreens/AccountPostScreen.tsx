@@ -22,12 +22,26 @@ import {
 } from "firebase/firestore";
 
 const PostScreen = ({ navigation }) => {
+  console.log("//////////////////PostScreen//////////////////");
+  function removeDuplicates(data) {
+    const seen = new Set();
+    return data.filter((item) => {
+      const key = item.category + item.topic;
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    });
+  }
+
   const [courseList, setCourseList] = useState([]);
   const fetchCourse = async () => {
     const courseCollection = collection(FIREBASE_DB, "Courses");
     const courseSnapshot = await getDocs(courseCollection);
     const courseList = courseSnapshot.docs.map((doc) => doc.data());
-    setCourseList(courseList);
+    console.log("courseList:", courseList);
+    setCourseList(removeDuplicates(courseList)); // spread the courseList array inside the Set constructor
   };
 
   const [category, setCategory] = useState("วิชาการ");
@@ -65,17 +79,45 @@ const PostScreen = ({ navigation }) => {
   const addCourse = async (category, topic, content, price) => {
     const courseCollection = collection(FIREBASE_DB, "Courses");
 
-    try {
-      const newDocRef = await addDoc(courseCollection, {
-        id: FIREBASE_AUTH.currentUser.uid,
-        category: category,
-        topic: topic,
-        content: content,
-        price: price, // เพิ่มราคา
-      });
-      console.log("Document added with ID: ", newDocRef.id);
-    } catch (error) {
-      console.error("Error adding document: ", error);
+    // ตรวจสอบว่ามีหัวข้อซ้ำใน Firestore หรือไม่
+    const querySnapshot = await getDocs(courseCollection);
+    const duplicateTopic = querySnapshot.docs.find((doc) => {
+      const data = doc.data();
+      return data.category === category && data.topic === topic;
+    });
+
+    // ตรวจสอบว่าข้อมูลทุกช่องถูกกรอกครบ
+    if (!category || !topic || !content || !price) {
+      Alert.alert("โปรดกรอกข้อมูลให้ครบ");
+      return;
+    } else if (isNaN(price)) {
+      Alert.alert("ราคาต้องเป็นตัวเลขเท่านั้น");
+      return;
+
+    } else if (duplicateTopic) {
+      Alert.alert("ขออภัย, หัวข้อนี้มีอยู่แล้ว");
+      return;
+
+    } else {
+      try {
+        const newDocRef = await addDoc(courseCollection, {
+          id: FIREBASE_AUTH.currentUser.uid,
+          category: category,
+          topic: topic,
+          content: content,
+          price: price,
+        });
+        console.log("Document added with ID: ", newDocRef.id);
+        Alert.alert("โพสต์บล็อกสำเร็จ");
+        navigation.goBack();
+        setCategory("วิชาการ");
+        setTopic("เพิ่มหัวข้อใหม่");
+        setContent("");
+        setNewTopic("");
+        setPrice(""); // เพิ่มราคา
+      } catch (error) {
+        console.error("Error adding document: ", error);
+      }
     }
   };
 
@@ -92,6 +134,9 @@ const PostScreen = ({ navigation }) => {
     } else {
       addCourse(category, topic, content, price); // ส่งราคาเข้าไป
     }
+   
+    Alert.alert("โพสต์บล็อกสำเร็จ");
+    // navigation.goBack();
   };
 
   return (
@@ -109,6 +154,7 @@ const PostScreen = ({ navigation }) => {
         </Picker>
 
         <Text style={styles.title}>เลือกหัวข้อ:</Text>
+        <Text style={[styles.title, {fontWeight:"500", fontStyle:"italic", fontSize:15, color:"red"}]}>**ดูหัวข้อที่เคย post เพื่อไม่ให้โพสต์ซ้ำ</Text>
         <Picker selectedValue={topic} onValueChange={handleTopicChange}>
           <Picker.Item label="เพิ่มหัวข้อใหม่" value="เพิ่มหัวข้อใหม่" />
           {courseList
@@ -122,7 +168,7 @@ const PostScreen = ({ navigation }) => {
             ))}
         </Picker>
 
-        {topic === "เพิ่มหัวข้อใหม่" && (
+        {/* {topic === "เพิ่มหัวข้อใหม่" && ( */}
           <View>
             <Text style={styles.title}>หัวข้อใหม่:</Text>
             <TextInput
@@ -132,7 +178,7 @@ const PostScreen = ({ navigation }) => {
               value={newTopic}
             />
           </View>
-        )}
+         {/* )} */}
 
         <Text style={styles.title}>หัวข้อที่สอน:</Text>
         <TextInput

@@ -98,7 +98,7 @@ const AccountEditScreen = ({ navigation }) => {
             const studentRef = doc(FIREBASE_DB, "Courses", postid);
             await deleteDoc(studentRef);
             console.log("ลบข้อมูลเรียบร้อยแล้ว");
-            navigation.navigate("view");
+            navigation.goBack();
           } catch (e) {
             console.error("เกิดข้อผิดพลาดในการลบข้อมูล:", e);
           }
