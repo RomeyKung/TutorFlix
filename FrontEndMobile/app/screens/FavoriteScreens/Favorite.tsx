@@ -12,22 +12,24 @@ const FavoriteTutor = (props: any) => {
       <FlatList
         data={user.favorite}
         renderItem={({ item }) => (
-          <TeacherCard
-          item={item}
-          likeAlready={true}
-          name={item.name}
-          topic={item.topic}
-          price={item.price}
-          rating={item.rating}
-          img={item.img}
-          courseId={item.courseId}
-          // แนบข้อมูลอื่น ๆ ตามความจำเป็น
-          function={() =>
-            props.navigation.navigate("FavoriteTutorDetail", {
-              course: item.item,
-            })
-          }
-        />
+          <View style={{ alignItems: "center" }}>
+            <TeacherCard
+              item={item}
+              likeAlready={true}
+              name={item.name}
+              topic={item.topic}
+              price={item.price}
+              rating={item.rating}
+              img={item.img}
+              courseId={item.courseId}
+              // แนบข้อมูลอื่น ๆ ตามความจำเป็น
+              function={() =>
+                props.navigation.navigate("FavoriteTutorDetail", {
+                  course: item.item,
+                })
+              }
+            />
+          </View>
         )}
         keyExtractor={(item) => item.courseId}
       />
