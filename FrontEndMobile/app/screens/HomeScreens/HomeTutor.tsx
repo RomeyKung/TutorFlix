@@ -34,7 +34,7 @@ const HomeTutor = ({ navigation, route }) => {
         renderItem={({ item }) => (
           // console.log("item: ", item),
           // console.log(item.teacherInfo[0].img.path),
-
+          <View style={{alignItems: "center"}}>
           <TeacherCard
             item={item}
             name={
@@ -51,6 +51,7 @@ const HomeTutor = ({ navigation, route }) => {
               })
             }
           />
+          </View>
         )}
         keyExtractor={(item, index) => index.toString()}
       />

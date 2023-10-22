@@ -28,11 +28,6 @@ const SearchTutor = ({ navigation, route }) => {
         const fullName = item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName;
         return fullName.toLowerCase().includes(search.toLowerCase());
       });
-  // console.log(courseTopic);
-  // useEffect(() => {
-  //   setSearch("");
-  // }, [search]);
-  
   return (
     <ScrollView>
       <SearchBar setSearch={setSearch} search={search} />
