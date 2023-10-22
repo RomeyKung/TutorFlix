@@ -13,6 +13,7 @@ export {default as HomeTutorDetail} from './HomeScreens/HomeTutorDetail';
 //FavoriteStack
 ///////////////////////////////////////////////////////
 export {default as Favorite} from './FavoriteScreens/Favorite';
+export {default as FavoriteTutorDetail} from './FavoriteScreens/FavoriteTutorDetail';
 
 //AccountStack
 ///////////////////////////////////////////////////////

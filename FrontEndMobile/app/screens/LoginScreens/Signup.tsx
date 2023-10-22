@@ -46,6 +46,7 @@ const Signup = (prop, { navigation }: any) => {
     phone: "",
     img: {},
     social: {},
+    favorite: [],
   });
 
   const addUserData = async (id: String, user: any) => {
@@ -67,6 +68,7 @@ const Signup = (prop, { navigation }: any) => {
           name: "blank-profile.webp",
           path: "https://firebasestorage.googleapis.com/v0/b/tutorflix-c64b4.appspot.com/o/images%2Fblank-profile.webp?alt=media&token=ad7c1084-a05f-4b22-a595-ddf2b39f9f82",
         },
+        favorite: []
       });
       // console.log("id user", id);
       // console.log("Document written with ID: ", docRef.id);

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { Pressable } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { FIREBASE_AUTH, FIREBASE_DB } from "../../FirebaseConfig";
 interface TeacherProps {
   // children?: React.ReactNode;
   function?: () => void;
@@ -11,27 +13,117 @@ interface TeacherProps {
   price: Number;
   rating: Number;
   img?: any;
+  courseId?: String;
+  item:any;
 }
 
 function TeacherCard(props: TeacherProps) {
+  const courseId = props.courseId;
+  console.log("//////////////////TeacherCard//////////////////===>", courseId);
+  // console.log("courseIdCurrentCard:", courseId);
   const [name, setName] = useState<String>("anyone");
   const [topic, setTopic] = useState<String>("topic");
   const [price, setPrice] = useState<Number>(0);
   const [rating, setRating] = useState<Number>(0);
   const [img, setImg] = useState<any>(null);
+  const item = props.item;
+  console.log("item:", item);
 
   const [userFav, setUserFav] = useState<boolean>(props.likeAlready);
-
+//toggle ui
   const toggleFavorite = () => {
     setUserFav(!userFav);
   };
+  //check for update ui
+  const checkFav = async () => {
+    const userRef = doc(FIREBASE_DB, "Users", FIREBASE_AUTH.currentUser.uid);
+    const userNow = await getDoc(userRef);
+    // console.log("userNow:", userNow.data().favorite);
+  
+    if (userNow.data().favorite) {
+      // เช็คว่าคอร์สปัจจุบันอยู่ในรายการ favorite หรือไม่
+      
+      const isFavorite = userNow.data().favorite.some( course => course.courseId === courseId);
+      console.log("isFavorite:", isFavorite);
+      // console.log("courseIdinside:", courseId);
+      setUserFav(isFavorite);
+    }
+  };
+  
+  const addToDB = async () => {
+    const userRef = doc(FIREBASE_DB, "Users", FIREBASE_AUTH.currentUser.uid);
+    const userNow = await getDoc(userRef);
+    console.log("userNow:", userNow.data().favorite);
+    if (userNow.data().favorite == undefined) {
+      console.log("itemInFunction:", item),
+      await updateDoc(userRef, {
+        favorite: [
+          {
+            item:item,
+            courseId: courseId,
+            name: name,
+            topic: topic,
+            price: price,
+            rating: rating,
+            img: img,
+           
+          },
+        ],
+      });
+    } else {
+      await updateDoc(userRef, {
+        favorite: [
+          ...userNow.data().favorite,
+          {
+            item:item,
+            courseId: courseId,
+            name: name,
+            topic: topic,
+            price: price,
+            rating: rating,
+            img: img,
+          },
+        ],
+      });
+    }
+  };
+  const removeFromDB = async () => {
+    const userRef = doc(FIREBASE_DB, "Users", FIREBASE_AUTH.currentUser.uid);
+    const userNow = await getDoc(userRef);
+    
+    if (userNow.data().favorite) {
+      const updatedFavorite = userNow.data().favorite.filter(item => item.courseId !== courseId);
+      await updateDoc(userRef, {
+        favorite: updatedFavorite,
+      });
+    }
+  
+    toggleFavorite(); // อัปเดตสถานะใน UI
+  };
+  
+  // ฟังก์ชันสำหรับเพิ่มหรือลบคอร์สในรายการ favorite
+  const toggleFavInDB = () => {
+    if (userFav) {
+      // remove from favorite
+      console.log("remove from favorite");
+      removeFromDB();
+    } else {
+      // add to favorite
+      addToDB();
+      toggleFavorite();
+      console.log("add to favorite");
+    }
+  };
+
   useEffect(() => {
     // console.log(props.img)
+    // setCourseId(props.courseId);
     setName(props.name);
     setTopic(props.topic);
     setPrice(props.price);
     setRating(props.rating);
     setImg(props.img);
+    checkFav();
   }, []);
 
   return (
@@ -65,7 +157,7 @@ function TeacherCard(props: TeacherProps) {
           </View>
 
           {/* Favorite Button */}
-          <Pressable onPress={toggleFavorite}>
+          <Pressable onPress={toggleFavInDB}>
             <MaterialCommunityIcons
               style={{ marginTop: 10 }}
               name={userFav ? "heart" : "heart-outline"}

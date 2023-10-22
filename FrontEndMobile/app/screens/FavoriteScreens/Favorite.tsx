@@ -1,16 +1,38 @@
-import { View, Text } from "react-native";
+import { View, Text, FlatList } from "react-native";
 import React from "react";
 import TeacherCard from "../../Components/TeacherCard";
 import { useSelector } from "react-redux";
-const Favorite = (props: any) => {
+
+const FavoriteTutor = (props: any) => {
   const user = useSelector((state: any) => state.user);
-  console.log("user:", user);
+
+
   return (
-    <View style={{backgroundColor:"#fff", height:"100%", alignItems:"center"}}>
-        
-      {/* <TeacherCard likeAlready={true} name={"rome"} title={"rome"} price={20} rating={5}/> */}
+    <View style={{ backgroundColor: "#fff", height: "100%" }}>
+      <FlatList
+        data={user.favorite}
+        renderItem={({ item }) => (
+          <TeacherCard
+          item={item}
+          likeAlready={true}
+          name={item.name}
+          topic={item.topic}
+          price={item.price}
+          rating={item.rating}
+          img={item.img}
+          courseId={item.courseId}
+          // แนบข้อมูลอื่น ๆ ตามความจำเป็น
+          function={() =>
+            props.navigation.navigate("FavoriteTutorDetail", {
+              course: item.item,
+            })
+          }
+        />
+        )}
+        keyExtractor={(item) => item.courseId}
+      />
     </View>
   );
 };
 
-export default Favorite;
+export default FavoriteTutor;

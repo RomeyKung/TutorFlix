@@ -18,7 +18,7 @@ const ReviewCard = (props) => {
     "//////////////////////////////////////////ReviewCard//////////////////////////////////////////"
   );
   const review = props.review;
-  console.log("review:", review);
+  // console.log("review:", review);
   const {
     content,
     additionalComments,
@@ -42,8 +42,8 @@ const ReviewCard = (props) => {
     // code
     calculateRating(worth, content, techniq);
   }, []);
-  console.log( "Here2"+ uimg);
-  console.log(props.review)
+  // console.log( "Here2"+ uimg);
+  // console.log(props.review)
 
   return (
     <View>

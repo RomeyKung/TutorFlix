@@ -49,7 +49,7 @@ const SearchTag = ({ navigation, route }) => {
             />
           </View>
         )}
-        keyExtractor={(item) => item}
+        keyExtractor={(item) => item.toString()}
       />
     </View>
   );
