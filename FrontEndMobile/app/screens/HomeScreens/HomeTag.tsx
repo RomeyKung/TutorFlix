@@ -28,7 +28,7 @@ const HomeTag = ({ navigation, route }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View>
+      <View style={{backgroundColor: "white", height: "100%"}}>
         <SearchBar setSearch={setSearch} search={search} />
 
         {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สในหมวดหมู่ที่เลือก */}

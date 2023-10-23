@@ -22,7 +22,7 @@ const SearchTag = ({ navigation, route }) => {
   };
 
   return (
-    <View>
+    <View style={{backgroundColor: "white", height: "100%"}}>
       <SearchBar setSearch={setSearch} search={search} />
 
       {/* แสดงแท็กที่ไม่ซ้ำกันจากคอร์สที่ตรงกับเงื่อนไขการค้นหา */}

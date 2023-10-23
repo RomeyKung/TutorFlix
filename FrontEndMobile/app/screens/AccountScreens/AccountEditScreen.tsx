@@ -109,7 +109,7 @@ const AccountEditScreen = ({ navigation }) => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <ScrollView>
+      <ScrollView style={{backgroundColor: "white"}}>
         <View style={styles.container}>
           <Text style={styles.title}>เลือกโพสต์:</Text>
 
@@ -173,7 +173,6 @@ export default AccountEditScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
     paddingHorizontal: 16,
     paddingTop: 20,
     position: "relative",

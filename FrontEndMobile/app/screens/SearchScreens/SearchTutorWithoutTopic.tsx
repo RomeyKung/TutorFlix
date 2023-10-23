@@ -13,17 +13,17 @@ const HomeTutor = ({ navigation, route }) => {
 
   useEffect(() => {
     const filteredCourse = courseAll.filter(
-      (item) =>{
+      (item) => {
         const fullname = item.teacherInfo[0].firstName + " " + item.teacherInfo[0].lastName
 
-       return fullname.toLowerCase().includes(search.toLowerCase())
+        return fullname.toLowerCase().includes(search.toLowerCase())
       }
     );
     setCourseTopic(filteredCourse);
   }, [search, courseAll]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{ backgroundColor: "white" }}>
       <SearchBar setSearch={setSearch} search={search} />
       {courseTopic.map((item) => (
         <View style={{ alignItems: "center" }} key={item.courseId}>

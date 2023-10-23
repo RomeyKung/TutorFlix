@@ -23,7 +23,7 @@ const HomeTutor = ({ navigation, route }) => {
   }, [search, category, topic, courseAll]);
 
   return (
-    <ScrollView>
+    <ScrollView style={{backgroundColor: "white"}}>
       <SearchBar setSearch={setSearch} search={search} />
       {courseTopic.map((item) => (
         <View style={{ alignItems: "center" }} key={item.courseId}>

@@ -120,7 +120,7 @@ const Account = ({ navigation }: RouterProps) => {
 
   return (
     <ScrollView>
-      <View>
+      <View style={{backgroundColor: "white"}}>
         <View style={styles.Profile}>
           {/* <Image style={styles.img} source={UserInfo.img} resizeMode="contain" /> */}
           <TouchableOpacity onPress={pickImage}>
@@ -143,7 +143,7 @@ const Account = ({ navigation }: RouterProps) => {
             <Text style={styles.input}>{NewEmail}</Text>
           </View>
           <View style={styles.flexAndRow}>
-            <Text style={styles.txt}>phone : </Text>
+            <Text style={styles.txt}>Phone : </Text>
             <TextInput
               style={styles.input}
               value={Newphone}
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
     // borderColor: "black",
   },
   btn: {
+    marginBottom: 30,
     gap: 20,
     justifyContent: "center",
     flexDirection: "row",
@@ -230,6 +231,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   txt: {
+    marginTop: 10,
     fontWeight: "bold",
   },
 });
