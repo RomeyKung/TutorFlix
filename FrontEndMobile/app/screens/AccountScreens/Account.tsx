@@ -1,5 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react"; // Removed useEffect
 import * as ImagePicker from "expo-image-picker";
 import {
   View,
@@ -24,15 +24,33 @@ import { useSelector } from "react-redux";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { doc } from "@firebase/firestore";
 import { updateDoc } from "firebase/firestore";
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts } from "expo-font";
+
+
+
+
+
+
+
 
 interface RouterProps {
   navigation: NavigationProp<any, any>;
 }
 
 const Account = ({ navigation }: RouterProps) => {
+
+
+
   const storeUser = useSelector((state: any) => state.user);
   // console.log("storeUser " + JSON.stringify(storeUser.img.path));
+  // const [loaded] = useFonts({
+  //   'Taohuai': require("../../../assets/fonts/MN_Taohuai.ttf")
+  // });
 
+  // if (!loaded) {
+  //   return <Text>Loading fonts...</Text>;
+  // }
   const [currentImage, setCurrentImage] = useState(
     storeUser.img.path == null ? null : storeUser.img.path
   );
@@ -119,8 +137,9 @@ const Account = ({ navigation }: RouterProps) => {
   };
 
   return (
+    
     <ScrollView>
-      <View style={{backgroundColor: "white"}}>
+      <View style={{backgroundColor: "white", height : '120%'}}>
         <View style={styles.Profile}>
           {/* <Image style={styles.img} source={UserInfo.img} resizeMode="contain" /> */}
           <TouchableOpacity onPress={pickImage}>
@@ -151,7 +170,7 @@ const Account = ({ navigation }: RouterProps) => {
               onChangeText={(text) => setNewPhone(text)}
             />
           </View>
-          <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" />
+          
         </View>
 
         <View style={styles.formBtn}>
@@ -178,11 +197,24 @@ const Account = ({ navigation }: RouterProps) => {
             />
           </View>
         </View>
+        <View style = {styles.logoutBtn}>
+      <Button onPress={() => FIREBASE_AUTH.signOut()} title="Logout" color={'red'}/>
+     
+      
       </View>
+      </View>
+     
     </ScrollView>
   );
 };
 const styles = StyleSheet.create({
+  logoutBtn : {
+    marginHorizontal : 40,
+    width : '80%',
+    height : '80%',
+    marginVertical : 20
+    
+  },
   img: {
     width: 90,
     height: 90,
@@ -214,17 +246,17 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
   input: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#F3F3F3",
     width: 300,
     height: 40,
     margin: 12,
-    borderWidth: 1,
+  
     padding: 10,
-    fontWeight: "bold",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    fontFamily : 'Montserrat-bold'
   },
   flexAndRow: {
     flexDirection: "row",
@@ -232,7 +264,8 @@ const styles = StyleSheet.create({
   },
   txt: {
     marginTop: 10,
-    fontWeight: "bold",
+    fontFamily : 'Montserrat-bold',
+    fontSize : 16,
   },
 });
 

@@ -11,6 +11,7 @@ const Block = (props:BlockProps) => {
   const [loaded] = useFonts({
     "Montserrat-Regular": require("../../assets/fonts/Montserrat-Regular.ttf"),
     "PakkadThin": require("../../assets/fonts/PakkadThin.ttf"),
+    "Taohuai" : require("../../assets/fonts/MN_Taohuai.ttf")
   });
 
   if (!loaded) {

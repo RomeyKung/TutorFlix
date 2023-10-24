@@ -144,18 +144,19 @@ const PostScreen = ({ navigation }) => {
       <ScrollView>
         <Text style={styles.title}>เลือกหมวดหมู่:</Text>
         <Picker
+        style={[styles.picker, { fontSize:15, color:"black", fontFamily :'prompt'}]}
           selectedValue={category}
           onValueChange={handleCategoryChange}
-          style={styles.picker}
-        >
+          >
           <Picker.Item label="วิชาการ" value="วิชาการ" />
           <Picker.Item label="ความบันเทิง" value="ความบันเทิง" />
           <Picker.Item label="ทั่วไป" value="ทั่วไป" />
         </Picker>
 
         <Text style={styles.title}>เลือกหัวข้อ:</Text>
-        <Text style={[styles.title, {fontWeight:"500", fontStyle:"italic", fontSize:15, color:"red"}]}>**ดูหัวข้อที่เคย post เพื่อไม่ให้โพสต์ซ้ำ</Text>
-        <Picker selectedValue={topic} onValueChange={handleTopicChange}>
+        <Text style={[styles.title, {fontWeight:"500", fontSize:15, color:"red", fontFamily :'prompt'}]}>**ดูหัวข้อที่เคย post เพื่อไม่ให้โพสต์ซ้ำ</Text>
+        <Picker style={[styles.title, {fontWeight:"500", fontSize:15, color:"black", fontFamily :'prompt'}]}
+        selectedValue={topic} onValueChange={handleTopicChange}>
           <Picker.Item label="เพิ่มหัวข้อใหม่" value="เพิ่มหัวข้อใหม่" />
           {courseList
             .filter((course) => course.category === category)
@@ -197,11 +198,12 @@ const PostScreen = ({ navigation }) => {
           onChangeText={handlePriceChange}
           value={price}
         />
-      </ScrollView>
-      <View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}>
         <ButtonCustom title="โพสต์บล็อก" function={handlePostBlog} />
         <ButtonCustom title="กลับ" function={() => navigation.goBack()} />
       </View>
+      </ScrollView>
+      
     </View>
   );
 };
@@ -222,11 +224,12 @@ const styles = StyleSheet.create({
     borderColor: "#737373",
     borderWidth: 1,
     borderRadius: 10,
+    fontFamily :"prompt"
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
     marginVertical: 10,
+    fontFamily :"prompt-bold"
   },
   textInput: {
     width: "100%",
@@ -236,6 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
+    fontFamily :"prompt"
   },
   textArea: {
     width: "100%",
@@ -245,11 +249,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginBottom: 15,
+    fontFamily :"prompt"
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "center",
     columnGap: 40,
     alignItems: "flex-end",
+    fontFamily :"prompt",
+    marginBottom : 20,
+    
   },
 });

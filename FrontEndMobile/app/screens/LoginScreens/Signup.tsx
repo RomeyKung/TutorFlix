@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   h1: {
+     marginTop : 20,
     fontSize: 36,
     fontWeight: "bold",
     marginBottom: 20,
@@ -210,13 +211,15 @@ const styles = StyleSheet.create({
   TextInput: {
     borderWidth: 1,
     borderColor: "black",
-    width: "80%",
+    width: "85%",
     padding: 10,
     margin: 10,
     borderRadius: 4,
+    alignContent : 'center',
+    justifyContent : 'center'
   },
   btn: {
-    backgroundColor: "#009688",
+    backgroundColor: "#4CA771",
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 12,

@@ -55,13 +55,13 @@ const ReviewCard = (props) => {
           ></Image>
         </View>
         <View style={styles.textSpace}>
-          <Text style={{ paddingVertical: 10 }}>{userName}</Text>
+          <Text style={{ paddingVertical: 10, fontFamily : 'prompt', fontSize : 20 }}>{userName}</Text>
         </View>
       </View>
       <View style={[styles.textSpace, { flexDirection: "column", gap: 10 }]}>
-        <Text>ความคุ้มค่า {worth}/10</Text>
-        <Text>เนื้อหาที่สอน {content}/10</Text>
-        <Text>เทคนิคในการสอน {techniq}/10</Text>
+        <Text  style = {{ fontFamily : 'prompt' }}>ความคุ้มค่า {worth}/10</Text>
+        <Text  style = {{ fontFamily : 'prompt' }}>เนื้อหาที่สอน {content}/10</Text>
+        <Text  style = {{ fontFamily : 'prompt' }}>เทคนิคในการสอน {techniq}/10</Text>
       </View>
       <View
         style={{
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   },
   textSpace: {
     paddingLeft: 30,
+    fontFamily : 'prompt'
   },
   contactPosition: {
     paddingLeft: 30,

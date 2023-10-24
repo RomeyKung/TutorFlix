@@ -19,7 +19,7 @@ const TagSearchStack = () => {
       <Stack.Screen
         name="TagSearch"
         component={TagSearch}
-        options={{ headerTitle: "TAG ทั้งหมด" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="TagTutor"
@@ -41,7 +41,7 @@ const TutorSearchStack = () => {
       <Stack.Screen
         name="TutorSearch"
         component={SearchTutorWithoutTopic}
-        options={{ headerTitle: "ค้นหาจากผู้สอน" }}
+        options={{ headerShown: false }}
       />
       <Stack.Screen name="SearchTutorDetail" component={SearchTutorDetail} />
     </Stack.Navigator>

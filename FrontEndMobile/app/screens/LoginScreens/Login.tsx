@@ -46,6 +46,9 @@ const Login = (prop: any) => {
           style={{ width: 200, height: 200, marginBottom: 20 }}
           source={require("../../../assets/icons/logo.png")}
         />
+        <Text  style = {{fontFamily : 'prompt', fontSize : 50}}>
+          TUTORFLIX
+        </Text>
         <TextInput
           style={styles.TextInput}
           placeholder="Email"
@@ -65,16 +68,16 @@ const Login = (prop: any) => {
 
       <View style={{ rowGap: 15 }}>
         <TouchableOpacity style={styles.btn} onPress={signIn}>
-          <Text style={{ color: "white" }}>Sign In</Text>
+          <Text style={{ color: "white"  , fontFamily : 'prompt' }}>Sign In</Text>
         </TouchableOpacity>
 
-        <Text style={{ color: "red" }}>Don’t have an account?</Text>
+        <Text style={{ color: "red"  , fontFamily : 'prompt' }}>Don’t have an account?</Text>
 
         <TouchableOpacity
           style={[styles.btn, { backgroundColor: "black" }]}
           onPress={navigateToSignUp}
         >
-          <Text style={{ color: "white" }}>Sign Up</Text>
+          <Text style={{ color: "white"  , fontFamily : 'prompt' }}>Sign Up</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   btn: {
-    backgroundColor: "#009688",
+    backgroundColor: "#4CA771",
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 12,

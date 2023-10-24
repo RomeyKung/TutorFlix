@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import TeacherCard from "../../Components/TeacherCard";
 import SearchBar from "../../Components/SearchBar";
 import { useSelector } from "react-redux";
+import { useFonts } from "expo-font";
 
 const HomeTutor = ({ navigation, route }) => {
-  console.log("//////////////////HomeTutor//////////////////");
+
+
   const category = route.params.category; //บันเทิง
   const topic = route.params.topic; // dota2
   const [search, setSearch] = useState("");

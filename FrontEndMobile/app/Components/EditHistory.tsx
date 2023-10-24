@@ -78,7 +78,7 @@ const EditHistory = (props) => {
           <View style={styles.modalContainer}>
             <TouchableWithoutFeedback>
               <View style={styles.modalContent}>
-                <Text style={styles.modalTitle}>ประวัติ</Text>
+              
 
                 <View style={styles.reviewItemArea}>
                   <Text style={styles.text}>ประวัติการศึกษา</Text>
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     borderRadius: 2,
     padding: 8,
     backgroundColor: "#F9F9F9",
+    fontFamily : 'prompt'
   },
   inputArea: {
     borderWidth: 1,
@@ -210,10 +211,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 8,
     backgroundColor: "#F9F9F9",
+    fontFamily : 'prompt'
   },
   text: {
-    fontWeight: "600",
-    fontFamily: "Montserrat-Regular",
+    fontFamily : 'prompt',
   },
 });
 

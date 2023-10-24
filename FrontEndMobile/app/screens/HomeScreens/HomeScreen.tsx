@@ -8,8 +8,15 @@ import {
   FlatList,
 } from "react-native";
 import Block from "../../Components/Block";
-
+import { useFonts } from "expo-font";
 const HomeScreen = ({navigation}) => {
+  const [loaded] = useFonts({
+    'Taohuai': require('../../../assets/fonts/MN_Taohuai.ttf'),
+  });
+  if (!loaded) {
+    // Fonts are still loading, you can return a loading indicator or null
+    return null;
+  }
   return (
     <>
       <View style={styles.banner}>

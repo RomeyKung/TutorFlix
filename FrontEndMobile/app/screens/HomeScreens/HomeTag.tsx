@@ -3,8 +3,10 @@ import { View, Text, StyleSheet, TouchableWithoutFeedback, Keyboard } from "reac
 import SearchBar from "../../Components/SearchBar";
 import Tag from "../../Components/Tag";
 import { useSelector } from "react-redux";
+import { useFonts } from "expo-font";
 
 const HomeTag = ({ navigation, route }) => {
+
   const courseAll = useSelector((state) => state.course.Courses);
   const category = route.params.type;
   const [search, setSearch] = useState("");
@@ -63,9 +65,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "black",
     fontSize: 20,
+    fontFamily : 'Montserrat',
   },
   textbox: {
     flexDirection: "column",
     width: "100%",
+    fontFamily : 'Montserrat',
   },
 });

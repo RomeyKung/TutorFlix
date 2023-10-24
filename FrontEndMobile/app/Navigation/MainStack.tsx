@@ -24,13 +24,13 @@ const MainStack = () => {
           // right: 3,
           elevation: 0,
           backgroundColor: "#ffffff",
-          borderTopRightRadius: 20,
-          borderTopLeftRadius: 20,
+          // borderTopRightRadius: 20,
+          // borderTopLeftRadius: 20,
           height: 90,
           // ...styles.shadow,
-          borderTopWidth: 1, // Add a black border at the top
-          borderLeftWidth: 1,
-          borderRightWidth: 1,
+          // borderTopWidth: 1, // Add a black border at the top
+          // borderLeftWidth: 1,
+          // borderRightWidth: 1,
           borderTopColor: "#000000", // Set the border color to black
         },
       }}

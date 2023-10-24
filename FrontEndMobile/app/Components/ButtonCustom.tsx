@@ -24,7 +24,7 @@ export default ButtonCustom;
 const styles = StyleSheet.create({
   btn: {
     paddingHorizontal: 20,
-    width: 140,
+    width: 160,
     height: 38,
     borderColor: "#000",
     borderWidth: 2,
@@ -35,9 +35,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   title: {
-    fontSize: 13,
-    fontWeight: "bold",
+    fontSize: 16,
+    fontWeight: "200",
     color: "#000",
     textAlign: "center",
+    fontFamily : 'prompt'
   },
 });

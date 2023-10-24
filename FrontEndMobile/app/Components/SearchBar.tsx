@@ -55,5 +55,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         marginLeft: 10,
         width: "85%",
+        fontFamily : 'Montserrat'
+
     },
 });

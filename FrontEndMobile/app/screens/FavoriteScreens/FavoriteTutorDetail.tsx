@@ -17,16 +17,22 @@ import { FIREBASE_AUTH, FIREBASE_DB } from "../../../FirebaseConfig";
 import { collection, getDocs, updateDoc } from "firebase/firestore";
 import { useSelector, useDispatch } from "react-redux";
 import { updateRating } from "../../Store/UsersSlice/CoursesSlice";
+import { store } from "../../Store/Store";
+import { useFonts } from "expo-font";
 
 const FavoriteTutorDetail = ({ navigation, route }) => {
+ 
+
   //////////////////////////////////////////////////////////////////////////////////////
   //For user
   const storeUser = useSelector((state: any) => state.user);
+  console.log( "Myeamil" + storeUser.email);
   const uid = FIREBASE_AUTH.currentUser.uid;
   const uimg = storeUser.img.path;
   const ufirstName = storeUser.firstName;
   const ulastName = storeUser.lastName;
   const uName = ufirstName + " " + ulastName;
+  const uEmail = storeUser.email
   const packUser = {
     uid: uid,
     img: uimg,
@@ -51,8 +57,16 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
     line,
     content,
   } = route.params.course;
-  // console.log("HERE" + JSON.stringify(route.params.course.teacherInfo[0]))
+  console.log("--------------------------Deatil i sus --------------------------------")
+  console.log( "HISTORY------------------" + route.params.course.teacherInfo[0].history);
+  console.log("HERE" + JSON.stringify(route.params.course.teacherInfo[0]))
   const teacherInfo = route.params.course.teacherInfo[0];
+  const tutorHistory = route.params.course.teacherInfo[0].history
+
+  var  cusEmail = ""
+  if (route.params.course.email) {
+    cusEmail = route.params.course.email
+  }
 
   const name = teacherInfo.firstName + " " + teacherInfo.lastName;
   const [ratingState, setRatingState] = useState(rating);
@@ -112,9 +126,11 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
         ></Image>
       </View>
       <View style={styles.textSpace}>
-        <Text style={[styles.text]}>{name}</Text>
-        <Text style={[styles.text, { color: "#4CA771" }]}>{topic}</Text>
-        <Text style={[styles.text, { color: "#0487FF" }]}>{price} THB/HR</Text>
+      <Text style={{ fontSize: 25, fontWeight: "600", paddingBottom: 10 ,  fontFamily : "Montserrat"}}>
+            {name}
+          </Text>
+        <Text style={[{ color: "#4CA771" , fontSize: 20, fontWeight: "600", paddingBottom: 10 ,  fontFamily : "Montserrat"}]}>{topic}</Text>
+        <Text style={[{ color: "#0487FF",  fontSize: 20, fontWeight: "600", paddingBottom: 10 ,  fontFamily : "Montserrat"}]}>{price} THB/HR</Text>
       </View>
       <View
         style={{
@@ -129,7 +145,7 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
             source={require("../../../assets/icons/star.png")}
             resizeMode="contain"
           />
-          <Text style={[styles.text, { color: "#fff", fontWeight: "normal" }]}>
+          <Text style={[styles.text, { color: "#fff", fontWeight: "normal", fontFamily : "Montserrat" }]}>
             {ratingState}
           </Text>
         </View>
@@ -161,21 +177,27 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
         ]}
       >
         <View>
-          <Text style={{ fontSize: 25, fontWeight: "bold", paddingBottom: 10 }}>
+          <Text style={{  fontSize: 25, fontWeight: "500", paddingBottom: 10 ,  fontFamily : "prompt"}}>
             แนะนำตัว
           </Text>
         </View>
         <View>
-          <Text>{history}</Text>
+         {  tutorHistory ?
+         (<Text style = {{ fontFamily : "Montserrat", fontSize : 15}}>
+          {tutorHistory}
+          </Text>) : (<Text style = {{ fontFamily : "Montserrat", fontSize : 15}}>
+          No information
+          </Text>) }
+         
         </View>
 
         <View>
-          <Text style={{ fontSize: 25, fontWeight: "bold", paddingBottom: 10 }}>
+          <Text style={{ paddingTop : 10, fontSize: 25, fontWeight: "500", paddingBottom: 10,  fontFamily : "prompt" }}>
             หัวข้อที่สอน
           </Text>
-        </View>
+        </View> 
         <View>
-          <Text>{content}</Text>
+          <Text style = {{ fontFamily : "Montserrat", fontSize : 15}}>{content}</Text>
         </View>
       </View>
       <View
@@ -190,21 +212,29 @@ const FavoriteTutorDetail = ({ navigation, route }) => {
         ]}
       >
         <View>
-          <Text style={{ fontSize: 25, fontWeight: "bold", paddingBottom: 10 }}>
+          <Text style={{ fontSize: 25, fontWeight: "200", paddingBottom: 10, fontFamily : "prompt" }}>
             รีวิวผู้สอน
           </Text>
         </View>
-        <ModalReview
+        
+  
+  {uEmail == cusEmail ?  
+  <ModalReview
           title="เขียนรีวิว"
           courseId={courseId}
           packUser={packUser}
           rerender={rerender}
           setRerender={setRerender}
-        />
+        /> :   <ButtonCustom title="สนใจคอร์ส" />
+}
+
+
+
+        
       </View>
       {/* <Text>reviews: {JSON.stringify(reviewsState)}</Text> */}
-
-      <FlatList
+          
+      <FlatList 
         data={reviewsState}
         renderItem={({ item }) => (
           // <View style={styles.textbox}>
@@ -252,9 +282,11 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "800",
     fontSize: 18,
+    fontFamily : 'Montserrat',
   },
   textSpace: {
     paddingLeft: 30,
+    fontFamily : 'Montserrat',
   },
   contactPosition: {
     paddingLeft: 30,
