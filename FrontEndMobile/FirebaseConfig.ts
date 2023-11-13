@@ -11,13 +11,13 @@ import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 
 //Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCPUhQ54ds-5UlyXs7QFM3AItL0kk-Ihi4",
-  authDomain: "tutorflix-c64b4.firebaseapp.com",
-  projectId: "tutorflix-c64b4",
-  storageBucket: "tutorflix-c64b4.appspot.com",
-  messagingSenderId: "810840685231",
-  appId: "1:810840685231:web:506576d8f8032f8c13f25a",
-  measurementId: "G-EPZTQ0WG4D",
+  apiKey: "AIzaSyCrxZVwT0zvR-NPZJ0FJoOqV0SnaE2HGNk",
+  authDomain: "tutorflix-8b873.firebaseapp.com",
+  projectId: "tutorflix-8b873",
+  storageBucket: "tutorflix-8b873.appspot.com",
+  messagingSenderId: "1098040533701",
+  appId: "1:1098040533701:web:24fd4da6a62ecab8e5c6ac",
+  measurementId: "G-CX0CGPZY96"
 };
 
 const reactNativePersistence = (firebaseAuth as any).getReactNativePersistence;
